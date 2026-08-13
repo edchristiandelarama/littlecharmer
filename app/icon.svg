@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 134" width="120" height="134">
+  <rect width="120" height="134" fill="#1b1119"/>
+  <g fill="none" stroke="#d9b478">
+    <circle cx="60" cy="16" r="9" stroke-width="6"/>
+    <path d="M60 25v8" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="60" cy="80" r="42" stroke-width="6"/>
+  </g>
+  <mask id="b">
+    <rect width="120" height="134" fill="#fff"/>
+    <circle cx="60" cy="80" r="7" fill="#000"/>
+  </mask>
+  <g mask="url(#b)" fill="#ee9bae">
+    <ellipse cx="60" cy="62" rx="9" ry="18"/>
+    <ellipse cx="60" cy="62" rx="9" ry="18" transform="rotate(72 60 80)"/>
+    <ellipse cx="60" cy="62" rx="9" ry="18" transform="rotate(144 60 80)"/>
+    <ellipse cx="60" cy="62" rx="9" ry="18" transform="rotate(216 60 80)"/>
+    <ellipse cx="60" cy="62" rx="9" ry="18" transform="rotate(288 60 80)"/>
+  </g>
+  <circle cx="60" cy="80" r="3.6" fill="#d9b478"/>
+</svg>

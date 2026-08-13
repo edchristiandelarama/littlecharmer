@@ -1,0 +1,245 @@
+{
+  "_comment": "EDITED BY THE ADMIN PANEL AT /admin — you can also edit it by hand. This is the single source of truth for everything written on the site.",
+  "shop": {
+    "name": "Little Charmer",
+    "tagline": "Flowers that never wilt",
+    "description": "Handmade fuzzy wire flowers from Lapu-Lapu City, Cebu — bouquets and single stems, made to order in any colour you like, and they last forever.",
+    "city": "Lapu-Lapu City",
+    "region": "Cebu",
+    "country": "Philippines"
+  },
+  "contact": {
+    "email": "hello@littlecharmer.ph",
+    "phone": "+639171234567",
+    "phoneDisplay": "0917 123 4567",
+    "facebookPage": "littlecharmerph",
+    "instagram": "littlecharmer.ph",
+    "tiktok": "littlecharmer.ph",
+    "viberEnabled": true,
+    "replyWindow": "within a few hours on working days",
+    "hours": [
+      {
+        "days": "Monday – Saturday",
+        "time": "9:00 AM – 7:00 PM"
+      },
+      {
+        "days": "Sunday",
+        "time": "Closed — messages answered Monday"
+      }
+    ]
+  },
+  "announcements": [
+    {
+      "text": "Handmade to order — every piece is made after you order it",
+      "href": ""
+    },
+    {
+      "text": "We ship nationwide. Fresh flowers can't travel; ours can.",
+      "href": "#shipping"
+    },
+    {
+      "text": "Any colour you can name, we can make",
+      "href": "/build"
+    },
+    {
+      "text": "Graduation season is filling up — order early",
+      "href": "/order"
+    }
+  ],
+  "promo": {
+    "active": false,
+    "kicker": "This month",
+    "headline": "",
+    "body": "",
+    "ctaLabel": "Start an order",
+    "ctaHref": "/order"
+  },
+  "gradSeason": {
+    "active": true,
+    "startMonth": 3,
+    "endMonth": 6,
+    "headline": "Graduation season",
+    "body": "March to June is our busiest stretch and the made-to-order queue fills up. If you need a bouquet for a ceremony, tell us the date early and we'll hold a slot."
+  },
+  "fulfilment": {
+    "leadTimeNote": "Every piece is made by hand after you order, so timing depends on the design and how busy the workshop is. Tell us your preferred date and we'll confirm it when we reply.",
+    "depositNote": "We ask for a 50% deposit to start a made-to-order piece, and the balance before it ships.",
+    "payments": [
+      "GCash",
+      "Maya",
+      "BPI / BDO bank transfer",
+      "Cash on pick-up"
+    ],
+    "zones": [
+      {
+        "name": "Lapu-Lapu & Mactan",
+        "detail": "Same-day or next-day drop-off by Grab or Lalamove",
+        "cost": "₱120 – ₱250, depending on distance"
+      },
+      {
+        "name": "Cebu City & Mandaue",
+        "detail": "Next-day drop-off across the bridge",
+        "cost": "from ₱180"
+      },
+      {
+        "name": "Anywhere in the Philippines",
+        "detail": "2 – 5 days by J&T or LBC, packed in a rigid box",
+        "cost": "from ₱180"
+      },
+      {
+        "name": "Pick-up",
+        "detail": "Collect from us in Lapu-Lapu City",
+        "cost": "Free"
+      }
+    ]
+  },
+  "about": {
+    "kicker": "Who makes these",
+    "headline": "One pair of hands, a lot of wire",
+    "photo": "",
+    "photoCaption": "Shaping petals, one loop at a time",
+    "body": [
+      "Little Charmer started with a single fuzzy wire rose made at a kitchen table, for someone who kept being given flowers that died in four days.",
+      "Every stem since has been shaped the same way — by hand, one petal at a time, out of chenille wire. There is no machine for this. A full bouquet is a few hours of bending, twisting and adjusting until the petals sit the way real ones do.",
+      "Because nothing here is grown, nothing here is limited. We aren't waiting for a season or hoping a shipment arrives in the right colour. If you can name a colour, we can usually make it — and whatever we make will still be on your shelf years from now."
+    ]
+  },
+  "craftSteps": [
+    {
+      "step": "Choose the wires",
+      "body": "We pull the colours for your order — matching a dress, a school colour, or a shade you sent us a photo of. Nothing is dyed or approximated; the colour is the wire itself, so it can't fade or brown.",
+      "detail": "Roughly 40 shades in stock, restocked weekly"
+    },
+    {
+      "step": "Shape every petal",
+      "body": "Each petal is one length of chenille wire, bent into a loop and pinched at the base. A rose takes fifteen of them. They're shaped by hand against a former so they curve the way a real petal curves, then opened out one at a time.",
+      "detail": "15 – 40 petals per flower, depending on the shape"
+    },
+    {
+      "step": "Twist the stem",
+      "body": "The petals get bound onto a wire core, then the whole stem is wrapped in green chenille to hide the join. This is the part that decides whether a flower looks handmade or looks cheap — it's slow on purpose.",
+      "detail": "Wrapped, not glued"
+    },
+    {
+      "step": "Assemble and wrap",
+      "body": "Stems are arranged, turned, and re-arranged until the bouquet reads well from every side, then hand-wrapped in paper with a ribbon and your card. We photograph it before it goes, so you see exactly what's arriving.",
+      "detail": "You get a photo before it ships"
+    }
+  ],
+  "promises": [
+    {
+      "title": "It never wilts",
+      "body": "No water, no sunlight, no wilting. A bouquet from us looks the same next year as it did the day it arrived. Give it a shake or a hairdryer on cool if it gets dusty.",
+      "stat": "Lasts",
+      "statUnit": "years, not days"
+    },
+    {
+      "title": "Any colour you want",
+      "body": "The colour is the wire, so we're not limited to what's in season or what came in on the truck. Send a photo of the dress, the sablay, the team jersey — we'll match it.",
+      "stat": "40+",
+      "statUnit": "shades in stock"
+    },
+    {
+      "title": "Safe for everyone",
+      "body": "No pollen, no scent, no sap. Fine for hospital rooms, for people with allergies, and for offices where fresh flowers aren't allowed.",
+      "stat": "Zero",
+      "statUnit": "pollen, scent or mess"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "How long do they actually last?",
+      "a": "Indefinitely, in normal indoor conditions. Chenille wire doesn't wilt, brown or drop petals. Kept out of direct sun it holds its colour for years. Customers from our first year still have theirs on display."
+    },
+    {
+      "q": "How long before my order is ready?",
+      "a": "Every piece is made by hand after you order, so timing depends on the design and how busy the workshop is. Tell us your preferred date and we'll confirm it when we reply."
+    },
+    {
+      "q": "Can you match a specific colour?",
+      "a": "Usually, yes — and this is the main reason people order from us instead of a flower stall. Send a photo of what you're matching (a gown, a uniform, a sablay, a logo) and we'll tell you the closest wires we have before you commit. There's a colour matcher on the site you can try yourself."
+    },
+    {
+      "q": "Do you ship outside Cebu?",
+      "a": "Anywhere in the Philippines. This is the quiet advantage of flowers that aren't alive — they survive a courier van perfectly well. Everything travels in a rigid box with the blooms braced so nothing gets crushed."
+    },
+    {
+      "q": "How do I pay?",
+      "a": "We accept GCash, Maya, BPI / BDO bank transfer, Cash on pick-up. We ask for a 50% deposit to start a made-to-order piece, and the balance before it ships."
+    },
+    {
+      "q": "Can I design my own bouquet?",
+      "a": "Yes — there's a builder on the site where you pick the flower shapes and the colours and see it come together in 3D. When you're happy, it sends the exact design straight to us with your order, so there's no guessing about what you meant."
+    },
+    {
+      "q": "Do you take big orders for events?",
+      "a": "Yes — weddings, graduations, corporate giveaways and souvenirs. Single stems in volume work out much cheaper per piece than bouquets. Use the bulk enquiry form and tell us your quantity and date."
+    },
+    {
+      "q": "What if I don't like it when it arrives?",
+      "a": "We send you a photo before anything ships, so you can ask for changes while it's still on the table. If something arrives damaged in transit, message us with a photo and we'll remake it."
+    },
+    {
+      "q": "How do I clean them?",
+      "a": "A hairdryer on the cool setting, held at arm's length, clears dust in a few seconds. For anything stubborn, a dry makeup brush works. Don't wash them — the wire core can rust."
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Mariel R.",
+      "where": "Lapu-Lapu City",
+      "occasion": "Graduation",
+      "stars": 5,
+      "text": "Ordered maroon and gold for my sister's graduation to match her sablay. The colour was exact. Everyone at the ceremony asked where it came from."
+    },
+    {
+      "name": "Jomar D.",
+      "where": "Quezon City",
+      "occasion": "Anniversary",
+      "stars": 5,
+      "text": "Shipped all the way from Cebu to Manila and arrived perfect. Third year in a row I've ordered — she still has all of them lined up on the shelf."
+    },
+    {
+      "name": "Aling Ching",
+      "where": "Mandaue",
+      "occasion": "Get well",
+      "stars": 5,
+      "text": "The hospital doesn't allow real flowers. These were fine and honestly nicer. My mother took them home when she was discharged."
+    },
+    {
+      "name": "Patricia L.",
+      "where": "Davao",
+      "occasion": "Wedding",
+      "stars": 5,
+      "text": "Used them for the bridesmaids so we wouldn't be worried about wilting in the heat. Six months later they're still in the girls' rooms."
+    },
+    {
+      "name": "Kenneth A.",
+      "where": "Cebu City",
+      "occasion": "Proposal",
+      "stars": 5,
+      "text": "Asked for something she could keep forever and they understood immediately. She said yes. The bouquet is on our dresser."
+    },
+    {
+      "name": "Bea M.",
+      "where": "Bohol",
+      "occasion": "Mother's Day",
+      "stars": 5,
+      "text": "My mom has allergies so real bouquets have always been off the table. She cried. Worth every peso."
+    },
+    {
+      "name": "Ryan T.",
+      "where": "Mactan",
+      "occasion": "Corporate",
+      "stars": 5,
+      "text": "Ordered 60 single stems as tokens for a company event. Delivered on time, all identical, and much better received than the usual giveaway."
+    },
+    {
+      "name": "Divine C.",
+      "where": "Talisay",
+      "occasion": "Just because",
+      "stars": 5,
+      "text": "Used the builder to design one myself and they made it exactly as I laid it out. Felt like I'd designed it, but someone who knew what they were doing made it properly."
+    }
+  ]
+}
