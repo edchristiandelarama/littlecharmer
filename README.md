@@ -123,42 +123,46 @@ you only pay whoever you buy the domain from.
 
 ---
 
-## The files you'd edit by hand
+## Where everything lives
 
-The admin covers the words. These are the things it deliberately doesn't:
+All the editable content sits in three JSON files, and **every one of them has a
+tab in `/admin`** — you shouldn't need to open them by hand.
 
-| File | What's in it |
-|---|---|
-| **`content/site.json`** | Everything the admin edits. Editable by hand too. |
-| **`lib/products.ts`** | The catalogue — bouquets, prices, occasions, stem lists |
-| **`lib/wire-colours.ts`** | Your chenille stock — drives the builder and colour matcher |
-| **`lib/flowers.ts`** | Flower shapes, their prices, wraps and ribbons |
-| **`public/photos/`** | Your photographs |
+| File | Admin tab | What's in it |
+|---|---|---|
+| `content/products.json` | **Products** | Bouquets, prices, photos, stem lists |
+| `content/materials.json` | **Wire colours**, **Flower shapes** | Your chenille stock, the shapes you make, wraps and ribbons |
+| `content/site.json` | the rest | Contact, banners, delivery, About, FAQ, reviews |
+| `public/photos/` | — | Uploaded automatically by the Products tab |
+
+Because they're in the repo, git is the database — you get a full history of
+every change and can roll any of it back.
+
+### Before it goes live
+
+- [ ] Real contact details — especially the **Facebook page username**, which
+      every "Send via Messenger" button depends on
+- [ ] Your real products, prices and photos
+- [ ] Wire colours matched to your actual stock
 
 Anything still invented is marked `⚠ PLACEHOLDER`:
 
 ```bash
-grep -rn "PLACEHOLDER" lib/
+grep -rn "PLACEHOLDER" content/ lib/
 ```
 
-### Before it goes live
+### Photos
 
-- [ ] Real contact details in the admin — especially the **Facebook page
-      username**, which every "Send via Messenger" button depends on
-- [ ] Real products and prices in `lib/products.ts`
-- [ ] Wire colours sampled from a photo of your actual stock
-- [ ] Photographs in `public/photos/`
+Upload them in **Products** — full size is fine. The browser shrinks each one to
+1600px and compresses it first, so a 5 MB phone photo becomes about 200 KB.
+That matters twice over: the raw file would otherwise live in the repo forever
+*and* be downloaded by every customer on mobile data.
 
-### Adding a photo
-
-Put the file in `public/photos/`, then set the path on the product:
-
-```ts
-photo: "/photos/sunday-blush.jpg",
-```
-
-Until you do, each piece draws its own bouquet from its stem list — so the shop
-looks finished before you've shot anything. Portrait, roughly 4:5, works best.
+Portrait, roughly 4:5, works best. Until a piece has a photo it draws its own
+bouquet from its stem list, so the shop looks finished before you've shot
+anything — which is also why the stem list is worth keeping accurate even after
+the photos arrive. It drives the colour dots, the colour filter and the stem
+count customers see.
 
 ---
 
