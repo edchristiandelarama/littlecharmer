@@ -4,9 +4,11 @@
   "private": true,
   "description": "Little Charmer — handmade fuzzy wire flowers that never wilt",
   "scripts": {
+    "predev": "node scripts/clean-stale-build.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "clean": "node -e \"require('fs').rmSync('.next',{recursive:true,force:true})\"",
     "lint": "next lint",
     "typecheck": "tsc --noEmit"
   },

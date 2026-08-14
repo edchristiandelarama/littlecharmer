@@ -10,6 +10,26 @@ npm run dev        # http://localhost:3000
 
 ---
 
+## If the site suddenly looks unstyled
+
+Blue links, serif text, huge stretched images — as though every stylesheet
+vanished. It usually has.
+
+`next build` and `next dev` share the `.next` folder but expect different things
+in it. Run a build and then start the dev server and you get a half-and-half
+folder: pages still render, but the stylesheet 404s. Nothing errors, so it looks
+like your last edit broke the front end.
+
+```bash
+npm run clean
+npm run dev
+```
+
+`npm run dev` now checks for this and clears it automatically, so you should
+only ever need `npm run clean` if you interrupt a build midway.
+
+---
+
 ## The admin panel
 
 **Go to `/admin`** — locally that's <http://localhost:3000/admin>, and once
