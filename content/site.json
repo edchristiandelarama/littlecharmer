@@ -108,22 +108,26 @@
     {
       "step": "Choose the wires",
       "body": "We pull the colours for your order — matching a dress, a school colour, or a shade you sent us a photo of. Nothing is dyed or approximated; the colour is the wire itself, so it can't fade or brown.",
-      "detail": "Roughly 40 shades in stock, restocked weekly"
+      "detail": "Roughly 40 shades in stock, restocked weekly",
+      "photo": ""
     },
     {
       "step": "Shape every petal",
       "body": "Each petal is one length of chenille wire, bent into a loop and pinched at the base. A rose takes fifteen of them. They're shaped by hand against a former so they curve the way a real petal curves, then opened out one at a time.",
-      "detail": "15 – 40 petals per flower, depending on the shape"
+      "detail": "15 – 40 petals per flower, depending on the shape",
+      "photo": ""
     },
     {
       "step": "Twist the stem",
       "body": "The petals get bound onto a wire core, then the whole stem is wrapped in green chenille to hide the join. This is the part that decides whether a flower looks handmade or looks cheap — it's slow on purpose.",
-      "detail": "Wrapped, not glued"
+      "detail": "Wrapped, not glued",
+      "photo": ""
     },
     {
       "step": "Assemble and wrap",
       "body": "Stems are arranged, turned, and re-arranged until the bouquet reads well from every side, then hand-wrapped in paper with a ribbon and your card. We photograph it before it goes, so you see exactly what's arriving.",
-      "detail": "You get a photo before it ships"
+      "detail": "You get a photo before it ships",
+      "photo": ""
     }
   ],
   "promises": [

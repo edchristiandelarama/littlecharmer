@@ -110,7 +110,12 @@ export default function Builder() {
      */
     <div className="grid gap-px overflow-hidden rounded-xl border border-line-firm bg-line-firm lg:h-[min(44rem,calc(100vh-8rem))] lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.5fr)_minmax(0,1fr)]">
       {/* ================= PANE 1 — shape, then colour ================= */}
-      <div className="flex min-h-0 flex-col gap-6 overflow-y-auto bg-ink p-5 sm:p-6">
+      {/* data-lenis-prevent: Lenis reads the wheel and scrolls the PAGE itself,
+          so without this an inner scroll area never receives the wheel at all. */}
+      <div
+        data-lenis-prevent
+        className="flex min-h-0 flex-col gap-6 overflow-y-auto overscroll-contain bg-ink p-5 sm:p-6"
+      >
         <div className="flex flex-col gap-3">
           <div className="flex items-baseline justify-between">
             <h2 className="eyebrow">Step 1 · Shape</h2>
@@ -282,7 +287,10 @@ export default function Builder() {
       </div>
 
       {/* ================= PANE 3 — summary ================= */}
-      <div className="flex min-h-0 flex-col gap-5 overflow-y-auto bg-ink p-5 sm:p-6">
+      <div
+        data-lenis-prevent
+        className="flex min-h-0 flex-col gap-5 overflow-y-auto overscroll-contain bg-ink p-5 sm:p-6"
+      >
         <div className="flex items-baseline justify-between">
           <h2 className="eyebrow">Your bouquet</h2>
           <div className="flex gap-3 text-2xs uppercase tracking-widest">

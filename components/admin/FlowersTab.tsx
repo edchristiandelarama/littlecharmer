@@ -124,6 +124,7 @@ export default function FlowersTab({
         price: 100,
         effort: "about 15 minutes each",
         defaultColour: colours[0]?.id ?? "blush",
+        foliage: false,
         geometry: {
           petals: 8,
           layers: 2,
@@ -299,6 +300,22 @@ export default function FlowersTab({
                         </select>
                       </label>
                     </div>
+
+                    <label className="flex items-start gap-2.5 text-sm text-cream-2">
+                      <input
+                        type="checkbox"
+                        className="mt-0.5 h-4 w-4 accent-brass"
+                        checked={Boolean(s.foliage)}
+                        onChange={(e) => update(i, { foliage: e.target.checked })}
+                      />
+                      <span>
+                        This is greenery, not a flower
+                        <span className="block text-xs text-faint">
+                          Foliage is arranged around the outside of a bouquet;
+                          blooms are mixed through the middle.
+                        </span>
+                      </span>
+                    </label>
 
                     {/* geometry */}
                     <div className="flex flex-col gap-4 border-t border-line pt-4">

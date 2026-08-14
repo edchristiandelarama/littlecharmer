@@ -380,9 +380,109 @@
       }
     },
     {
+      "id": "gerbera",
+      "name": "Gerbera",
+      "blurb": "Two dozen slim petals round a dark eye. Big, flat and cheerful.",
+      "price": 135,
+      "effort": "about 35 minutes each",
+      "defaultColour": "tangerine",
+      "geometry": {
+        "petals": 24,
+        "layers": 2,
+        "petalLength": 0.6,
+        "petalWidth": 0.11,
+        "wireRadius": 0.026,
+        "openness": 78,
+        "layerTwist": 8,
+        "centre": 0.22,
+        "centreColour": "onyx",
+        "stemLength": 2.8
+      }
+    },
+    {
+      "id": "cherry-blossom",
+      "name": "Cherry Blossom",
+      "blurb": "Five soft petals, barely there. Made in threes along a branch.",
+      "price": 60,
+      "effort": "about 8 minutes each",
+      "defaultColour": "blush",
+      "geometry": {
+        "petals": 5,
+        "layers": 1,
+        "petalLength": 0.3,
+        "petalWidth": 0.26,
+        "wireRadius": 0.026,
+        "openness": 70,
+        "layerTwist": 0,
+        "centre": 0.06,
+        "centreColour": "sunbeam",
+        "stemLength": 2.1
+      }
+    },
+    {
+      "id": "peony",
+      "name": "Peony",
+      "blurb": "The full one. Thirty petals in four rows — our most work, and it shows.",
+      "price": 190,
+      "effort": "about 50 minutes each",
+      "defaultColour": "bubblegum",
+      "geometry": {
+        "petals": 30,
+        "layers": 4,
+        "petalLength": 0.46,
+        "petalWidth": 0.3,
+        "wireRadius": 0.03,
+        "openness": 46,
+        "layerTwist": 30,
+        "centre": 0.05,
+        "centreColour": "",
+        "stemLength": 2.55
+      }
+    },
+    {
+      "id": "carnation",
+      "name": "Carnation",
+      "blurb": "Ruffled and tight-packed. Holds a colour better than anything else we make.",
+      "price": 115,
+      "effort": "about 25 minutes each",
+      "defaultColour": "cherry",
+      "geometry": {
+        "petals": 26,
+        "layers": 4,
+        "petalLength": 0.36,
+        "petalWidth": 0.2,
+        "wireRadius": 0.026,
+        "openness": 38,
+        "layerTwist": 24,
+        "centre": 0.04,
+        "centreColour": "",
+        "stemLength": 2.45
+      }
+    },
+    {
+      "id": "chrysanthemum",
+      "name": "Chrysanthemum",
+      "blurb": "A pom-pom of thin petals. Traditional, and the one older customers ask for.",
+      "price": 150,
+      "effort": "about 40 minutes each",
+      "defaultColour": "butter",
+      "geometry": {
+        "petals": 32,
+        "layers": 3,
+        "petalLength": 0.44,
+        "petalWidth": 0.09,
+        "wireRadius": 0.023,
+        "openness": 58,
+        "layerTwist": 15,
+        "centre": 0.07,
+        "centreColour": "",
+        "stemLength": 2.5
+      }
+    },
+    {
       "id": "leaf",
       "name": "Leaf",
-      "blurb": "Foliage. Not a flower, but a bouquet looks unfinished without it.",
+      "blurb": "Simple foliage. A bouquet looks unfinished without some green.",
       "price": 45,
       "effort": "about 5 minutes each",
       "defaultColour": "fern",
@@ -397,6 +497,70 @@
         "centre": 0,
         "centreColour": "",
         "stemLength": 2.2
+      },
+      "foliage": true
+    },
+    {
+      "id": "eucalyptus",
+      "name": "Eucalyptus",
+      "blurb": "Small round silver-green leaves. The filler that makes everything else look considered.",
+      "price": 55,
+      "effort": "about 10 minutes each",
+      "defaultColour": "sage",
+      "foliage": true,
+      "geometry": {
+        "petals": 9,
+        "layers": 2,
+        "petalLength": 0.28,
+        "petalWidth": 0.25,
+        "wireRadius": 0.023,
+        "openness": 72,
+        "layerTwist": 22,
+        "centre": 0,
+        "centreColour": "",
+        "stemLength": 2.5
+      }
+    },
+    {
+      "id": "fern-frond",
+      "name": "Fern Frond",
+      "blurb": "Long and feathery. Adds height without adding weight.",
+      "price": 50,
+      "effort": "about 8 minutes each",
+      "defaultColour": "forest",
+      "foliage": true,
+      "geometry": {
+        "petals": 14,
+        "layers": 1,
+        "petalLength": 0.52,
+        "petalWidth": 0.07,
+        "wireRadius": 0.019,
+        "openness": 64,
+        "layerTwist": 0,
+        "centre": 0,
+        "centreColour": "",
+        "stemLength": 2.7
+      }
+    },
+    {
+      "id": "olive-sprig",
+      "name": "Olive Sprig",
+      "blurb": "Narrow grey-green leaves. Quiet, and good with ivory.",
+      "price": 50,
+      "effort": "about 8 minutes each",
+      "defaultColour": "olive",
+      "foliage": true,
+      "geometry": {
+        "petals": 10,
+        "layers": 2,
+        "petalLength": 0.4,
+        "petalWidth": 0.1,
+        "wireRadius": 0.02,
+        "openness": 56,
+        "layerTwist": 26,
+        "centre": 0,
+        "centreColour": "",
+        "stemLength": 2.6
       }
     }
   ],

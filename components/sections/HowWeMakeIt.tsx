@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { craftSteps } from "@/lib/site.config";
 import SectionHead from "@/components/ui/SectionHead";
 import clsx from "@/lib/clsx";
@@ -296,8 +297,8 @@ export default function HowWeMakeIt() {
                 </ol>
               </div>
 
-              {/* diagram */}
-              <div className="relative hidden aspect-square items-center justify-center rounded-2xl border border-line bg-ink/60 p-12 text-petal lg:flex">
+              {/* Your photograph of this stage — or the drawing, until there is one */}
+              <div className="relative hidden aspect-square items-center justify-center overflow-hidden rounded-2xl border border-line bg-ink/60 p-12 text-petal lg:flex">
                 <div
                   aria-hidden
                   className="pointer-events-none absolute inset-0 rounded-2xl"
@@ -306,7 +307,31 @@ export default function HowWeMakeIt() {
                       "radial-gradient(60% 50% at 50% 42%, rgba(238,155,174,0.12), transparent 70%)",
                   }}
                 />
-                <StepDiagram step={step} active />
+
+                {/*
+                  Every photo stays mounted and cross-fades. Swapping a single
+                  src instead would re-request the image on each step change and
+                  flash empty in the gap.
+                */}
+                {craftSteps.map((s, i) =>
+                  s.photo ? (
+                    <Image
+                      key={s.step}
+                      src={s.photo}
+                      alt={`${s.step} — ${s.detail}`}
+                      fill
+                      sizes="(min-width: 1024px) 40vw, 0px"
+                      className={clsx(
+                        "absolute inset-0 object-cover transition-opacity duration-700",
+                        i === step ? "opacity-100" : "opacity-0",
+                      )}
+                    />
+                  ) : null,
+                )}
+
+                {craftSteps[step]?.photo ? null : (
+                  <StepDiagram step={step} active />
+                )}
 
                 {/* progress pips */}
                 <ol className="absolute bottom-6 flex gap-2" aria-hidden>

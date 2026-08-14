@@ -4,7 +4,12 @@ import { useMemo, useRef, type RefObject } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import type { BouquetBuild } from "@/lib/build-encode";
-import { ribbonById, wrapById, type FlowerShapeId } from "@/lib/flowers";
+import {
+  ribbonById,
+  shape as shapeDef,
+  wrapById,
+  type FlowerShapeId,
+} from "@/lib/flowers";
 import { arrangeBouquet } from "./flower-geometry";
 import Flower, { Wrap } from "./Flower";
 import type { Quality } from "./flower-geometry";
@@ -37,7 +42,7 @@ function orderStems(
       shape: group.shape,
       colour: group.colour,
     }));
-    if (group.shape === "leaf") foliage.push(...items);
+    if (shapeDef(group.shape).foliage) foliage.push(...items);
     else blooms.push(items);
   }
 

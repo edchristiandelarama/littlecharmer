@@ -7,6 +7,7 @@ import type {
   SiteContent,
 } from "@/lib/content-schema";
 import ProductsTab from "./ProductsTab";
+import PhotoField from "./PhotoField";
 import ColoursTab from "./ColoursTab";
 import FlowersTab from "./FlowersTab";
 import clsx from "@/lib/clsx";
@@ -864,13 +865,14 @@ export default function AdminPanel({
               </Field>
 
               <div className="grid gap-4 sm:grid-cols-2">
-                <Field title="Photo path" hint="e.g. /photos/hands.jpg — blank for the drawn panel">
-                  <input
-                    className={input}
+                <Field
+                  title="Photo"
+                  hint="A picture of you working. Blank shows the drawn panel."
+                >
+                  <PhotoField
                     value={data.about.photo}
-                    onChange={(e) =>
-                      patch("about", { ...data.about, photo: e.target.value })
-                    }
+                    productName="about"
+                    onChange={(photo) => patch("about", { ...data.about, photo })}
                   />
                 </Field>
                 <Field title="Photo caption">
@@ -892,7 +894,7 @@ export default function AdminPanel({
                 <Repeater
                   items={data.craftSteps}
                   onChange={(v) => patch("craftSteps", v)}
-                  blank={() => ({ step: "", body: "", detail: "" })}
+                  blank={() => ({ step: "", body: "", detail: "", photo: "" })}
                   addLabel="Add a step"
                   max={8}
                   render={(item, set) => (
@@ -916,6 +918,16 @@ export default function AdminPanel({
                         value={item.detail}
                         onChange={(e) => set({ detail: e.target.value })}
                       />
+                      <div className="flex flex-col gap-1.5">
+                        <span className="text-xs text-faint">
+                          Photo of this step — replaces the drawing when set
+                        </span>
+                        <PhotoField
+                          value={item.photo ?? ""}
+                          productName={item.step || "step"}
+                          onChange={(photo) => set({ photo })}
+                        />
+                      </div>
                     </>
                   )}
                 />

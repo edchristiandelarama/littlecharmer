@@ -36,6 +36,8 @@ export interface CraftStep {
   step: string;
   body: string;
   detail: string;
+  /** Optional real photograph of this stage. Falls back to the drawn diagram. */
+  photo?: string;
 }
 export interface Promise_ {
   title: string;

@@ -54,7 +54,7 @@ function layout(stems: SvgStem[], radius: number): Bloom[] {
       shape: g.shape,
       colour: g.colour,
     }));
-    if (g.shape === "leaf") foliage.push(...items);
+    if (shapeDef(g.shape).foliage) foliage.push(...items);
     else blooms.push(items);
   }
 
@@ -93,7 +93,7 @@ function Bloom({ bloom }: { bloom: Bloom }) {
   const base = wire(bloom.colour).hex;
 
   // Cap petal count — past about ten, SVG petals stop reading as separate.
-  const petals = Math.min(g.petals, bloom.shape === "leaf" ? 2 : 10);
+  const petals = Math.min(g.petals, def.foliage ? 3 : 10);
   const angles = Array.from({ length: petals }, (_, i) => (i / petals) * 360);
 
   const petalLen = bloom.r;

@@ -77,7 +77,14 @@ export const contentSchema = z.object({
   }),
 
   craftSteps: z
-    .array(z.object({ step: text(80), body: text(800), detail: text(120) }))
+    .array(
+      z.object({
+        step: text(80),
+        body: text(800),
+        detail: text(120),
+        photo: text(300).optional(),
+      }),
+    )
     .max(8),
 
   promises: z
@@ -114,7 +121,6 @@ export type SiteContent = z.infer<typeof contentSchema>;
  * THE CATALOGUE — content/products.json
  * ------------------------------------------------------------------------- */
 
-const SHAPES = ["rose", "tulip", "daisy", "sunflower", "lily", "bud", "leaf"] as const;
 const KINDS = ["bouquet", "mini", "stem"] as const;
 const OCCASIONS = [
   "graduation",
@@ -152,7 +158,9 @@ export const productsSchema = z.object({
         stems: z
           .array(
             z.object({
-              shape: z.enum(SHAPES),
+              /* A shape id, not a fixed list — shapes are editable in the
+                 admin, and the product editor only offers real ones. */
+              shape: z.string().trim().min(1).max(40),
               colour: z.string().trim().min(1).max(40),
               qty: z.number().int().min(1).max(60),
             }),
@@ -251,6 +259,7 @@ export const materialsSchema = z.object({
         price: z.number().int().min(0).max(100_000),
         effort: text(80),
         defaultColour: z.string().trim().max(40),
+        foliage: z.boolean().optional(),
         geometry: z.object({
           petals: z.number().int().min(1).max(48),
           layers: z.number().int().min(1).max(6),
