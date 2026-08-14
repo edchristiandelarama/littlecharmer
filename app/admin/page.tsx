@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
 import content from "@/content/site.json";
 import catalogue from "@/content/products.json";
+import materials from "@/content/materials.json";
 import { isAdminConfigured, isSignedIn } from "@/lib/admin-auth";
 import SignIn from "@/components/admin/SignIn";
 import AdminPanel from "@/components/admin/AdminPanel";
-import type { ProductsContent, SiteContent } from "@/lib/content-schema";
+import type {
+  MaterialsContent,
+  ProductsContent,
+  SiteContent,
+} from "@/lib/content-schema";
 
 /* Rendered per request — it depends on the sign-in cookie, so it must never be
    cached or prerendered. */
@@ -35,6 +40,7 @@ export default async function AdminPage() {
           <AdminPanel
             initial={content as unknown as SiteContent}
             initialProducts={catalogue as unknown as ProductsContent}
+            initialMaterials={materials as unknown as MaterialsContent}
           />
         </>
       ) : (

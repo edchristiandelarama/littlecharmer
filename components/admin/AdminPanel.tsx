@@ -1,8 +1,14 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import type { ProductsContent, SiteContent } from "@/lib/content-schema";
+import type {
+  MaterialsContent,
+  ProductsContent,
+  SiteContent,
+} from "@/lib/content-schema";
 import ProductsTab from "./ProductsTab";
+import ColoursTab from "./ColoursTab";
+import FlowersTab from "./FlowersTab";
 import clsx from "@/lib/clsx";
 
 /* ===========================================================================
@@ -15,6 +21,8 @@ import clsx from "@/lib/clsx";
 
 type Tab =
   | "products"
+  | "colours"
+  | "flowers"
   | "shop"
   | "contact"
   | "banners"
@@ -25,6 +33,8 @@ type Tab =
 
 const TABS: { id: Tab; label: string; hint: string }[] = [
   { id: "products", label: "Products", hint: "Pieces, prices, photos" },
+  { id: "colours", label: "Wire colours", hint: "Your chenille stock" },
+  { id: "flowers", label: "Flower shapes", hint: "Shapes, prices, 3D form" },
   { id: "shop", label: "Shop details", hint: "Name, tagline, where you are" },
   { id: "contact", label: "Contact", hint: "Email, Messenger, hours" },
   { id: "banners", label: "Banners", hint: "Top strip, promo, graduation" },
@@ -142,18 +152,23 @@ function Repeater<T>({
 export default function AdminPanel({
   initial,
   initialProducts,
+  initialMaterials,
 }: {
   initial: SiteContent;
   initialProducts: ProductsContent;
+  initialMaterials: MaterialsContent;
 }) {
   const [data, setData] = useState<SiteContent>(initial);
   const [catalogue, setCatalogue] = useState<ProductsContent>(initialProducts);
   /* The last saved state. Kept separately from `initial` because after a save
      the server-rendered prop is stale — without this, "Undo all changes" would
      roll back to how things looked before the save you just made. */
+  const [materials, setMaterials] = useState<MaterialsContent>(initialMaterials);
   const [baseline, setBaseline] = useState<SiteContent>(initial);
   const [productBaseline, setProductBaseline] =
     useState<ProductsContent>(initialProducts);
+  const [materialBaseline, setMaterialBaseline] =
+    useState<MaterialsContent>(initialMaterials);
   const [tab, setTab] = useState<Tab>("products");
   const [saving, setSaving] = useState(false);
   const [result, setResult] = useState<{ ok: boolean; message: string } | null>(null);
@@ -167,7 +182,11 @@ export default function AdminPanel({
     () => JSON.stringify(catalogue) !== JSON.stringify(productBaseline),
     [catalogue, productBaseline],
   );
-  const dirty = contentDirty || productsDirty;
+  const materialsDirty = useMemo(
+    () => JSON.stringify(materials) !== JSON.stringify(materialBaseline),
+    [materials, materialBaseline],
+  );
+  const dirty = contentDirty || productsDirty || materialsDirty;
 
   useEffect(() => {
     fetch("/api/admin/content")
@@ -214,6 +233,14 @@ export default function AdminPanel({
 
       // Only send what actually changed, so saving from the Products tab
       // doesn't needlessly rewrite the site content file, and vice versa.
+      // Materials first: products and content reference colour and shape ids,
+      // so if only one save can land, the definitions are the safer one.
+      if (materialsDirty) {
+        const error = await put("/api/admin/materials", materials);
+        if (error) errors.push(error);
+        else setMaterialBaseline(materials);
+      }
+
       if (productsDirty) {
         const error = await put("/api/admin/products", catalogue);
         if (error) errors.push(error);
@@ -308,6 +335,24 @@ export default function AdminPanel({
             <ProductsTab
               products={catalogue.products}
               onChange={(products) => setCatalogue({ ...catalogue, products })}
+            />
+          ) : null}
+
+          {tab === "colours" ? (
+            <ColoursTab
+              colours={materials.wireColours}
+              products={catalogue.products}
+              shapes={materials.flowerShapes}
+              onChange={(wireColours) => setMaterials({ ...materials, wireColours })}
+            />
+          ) : null}
+
+          {tab === "flowers" ? (
+            <FlowersTab
+              shapes={materials.flowerShapes}
+              colours={materials.wireColours}
+              products={catalogue.products}
+              onChange={(flowerShapes) => setMaterials({ ...materials, flowerShapes })}
             />
           ) : null}
 
@@ -1031,6 +1076,7 @@ export default function AdminPanel({
             onClick={() => {
               setData(baseline);
               setCatalogue(productBaseline);
+              setMaterials(materialBaseline);
               setResult(null);
             }}
             className="text-sm text-faint underline underline-offset-4 hover:text-cream-2"

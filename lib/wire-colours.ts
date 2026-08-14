@@ -1,7 +1,9 @@
 /* ===========================================================================
  * WIRE COLOURS — your chenille stock.
  *
- * >>> EDIT THIS to match what you actually keep on the shelf. <<<
+ * >>> DON'T EDIT THIS FILE — edit at /admin → Wire colours. <<<
+ *
+ * The stock itself lives in content/materials.json.
  *
  * These swatches drive the bouquet builder's colour picker, the gallery colour
  * filter and the colour matcher. Getting them close to your real wire matters
@@ -14,6 +16,8 @@
  * `metallic: true` gives the 3D flower a tinsel-like glint instead of a matte
  * fuzz — use it only for wires that genuinely sparkle.
  * =========================================================================== */
+
+import materials from "@/content/materials.json";
 
 export type WireFamily = "pink" | "warm" | "green" | "cool" | "neutral";
 
@@ -36,49 +40,7 @@ export const wireFamilies: { id: WireFamily; label: string }[] = [
   { id: "neutral", label: "Neutrals & Metallics" },
 ];
 
-export const wireColours: WireColour[] = [
-  // --- Pinks & reds -------------------------------------------------------
-  { id: "ruby", name: "Ruby", hex: "#c8102e", family: "pink" },
-  { id: "cherry", name: "Cherry", hex: "#e23e57", family: "pink" },
-  { id: "coral", name: "Coral", hex: "#ff7f6b", family: "pink" },
-  { id: "bubblegum", name: "Bubblegum", hex: "#ff8fb1", family: "pink" },
-  { id: "blush", name: "Blush", hex: "#f5a9c0", family: "pink" },
-  { id: "dusty-rose", name: "Dusty Rose", hex: "#c97b8e", family: "pink" },
-  { id: "wine", name: "Wine", hex: "#7d2338", family: "pink" },
-
-  // --- Warm & sunny -------------------------------------------------------
-  { id: "tangerine", name: "Tangerine", hex: "#f2762e", family: "warm" },
-  { id: "marigold", name: "Marigold", hex: "#f5a623", family: "warm" },
-  { id: "sunbeam", name: "Sunbeam", hex: "#f7d34e", family: "warm" },
-  { id: "butter", name: "Butter", hex: "#f7e08a", family: "warm" },
-  { id: "peach", name: "Peach", hex: "#f7b58a", family: "warm" },
-  { id: "maroon", name: "Maroon", hex: "#6b2020", family: "warm" },
-
-  // --- Greens -------------------------------------------------------------
-  { id: "mint", name: "Mint", hex: "#7bc47f", family: "green" },
-  { id: "sage", name: "Sage", hex: "#9cb39a", family: "green" },
-  { id: "fern", name: "Fern", hex: "#4e8b4a", family: "green" },
-  { id: "forest", name: "Forest", hex: "#2f5d3a", family: "green" },
-  { id: "olive", name: "Olive", hex: "#8a8f4a", family: "green" },
-
-  // --- Blues & purples ----------------------------------------------------
-  { id: "powder", name: "Powder Blue", hex: "#a9c9e8", family: "cool" },
-  { id: "cobalt", name: "Cobalt", hex: "#3d6fd4", family: "cool" },
-  { id: "navy", name: "Navy", hex: "#23345e", family: "cool" },
-  { id: "teal", name: "Teal", hex: "#2f8f8f", family: "cool" },
-  { id: "lilac", name: "Lilac", hex: "#c4a6e0", family: "cool" },
-  { id: "violet", name: "Violet", hex: "#7a4fb0", family: "cool" },
-  { id: "plum", name: "Plum", hex: "#5b2a4e", family: "cool" },
-
-  // --- Neutrals & metallics ----------------------------------------------
-  { id: "ivory", name: "Ivory", hex: "#f3f0e6", family: "neutral" },
-  { id: "cream", name: "Cream", hex: "#ebe1cc", family: "neutral" },
-  { id: "taupe", name: "Taupe", hex: "#a99a8c", family: "neutral" },
-  { id: "onyx", name: "Onyx", hex: "#2f2a33", family: "neutral" },
-  { id: "gold", name: "Gold", hex: "#c9a227", family: "neutral", metallic: true },
-  { id: "silver", name: "Silver", hex: "#c7cbd1", family: "neutral", metallic: true },
-  { id: "rose-gold", name: "Rose Gold", hex: "#e0a98f", family: "neutral", metallic: true },
-];
+export const wireColours = materials.wireColours as WireColour[];
 
 /* --- lookups --------------------------------------------------------------- */
 

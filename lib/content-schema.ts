@@ -184,3 +184,117 @@ export const productsSchema = z.object({
 });
 
 export type ProductsContent = z.infer<typeof productsSchema>;
+
+/* ---------------------------------------------------------------------------
+ * MATERIALS — content/materials.json
+ *
+ * Your wire stock, the shapes you make, and the wraps and ribbons. These drive
+ * the builder, the colour matcher, the shop filters and the 3D geometry.
+ * ------------------------------------------------------------------------- */
+
+const HEX = /^#[0-9a-fA-F]{6}$/;
+const ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+const hex = (label: string) =>
+  z.string().trim().regex(HEX, `${label} must be a colour like #c8102e`);
+
+const slug = (label: string) =>
+  z
+    .string()
+    .trim()
+    .min(1, `${label} is needed`)
+    .max(40)
+    .regex(ID, `${label} must be lowercase letters, numbers and hyphens`);
+
+/** Fails when a list contains the same id twice. Ids are how everything else
+ *  refers to these, so a duplicate silently shadows one of them. */
+function uniqueIds<T extends { id: string }>(what: string) {
+  return (list: T[], ctx: z.RefinementCtx) => {
+    const seen = new Set<string>();
+    list.forEach((item, i) => {
+      if (seen.has(item.id)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: [i, "id"],
+          message: `Two ${what} share the id "${item.id}"`,
+        });
+      }
+      seen.add(item.id);
+    });
+  };
+}
+
+export const materialsSchema = z.object({
+  _comment: z.string().optional(),
+
+  wireColours: z
+    .array(
+      z.object({
+        id: slug("Colour id"),
+        name: required("Colour name", 40),
+        hex: hex("Colour"),
+        family: z.enum(["pink", "warm", "green", "cool", "neutral"]),
+        metallic: z.boolean().optional(),
+        inStock: z.boolean().optional(),
+      }),
+    )
+    .min(1, "You need at least one wire colour")
+    .max(120)
+    .superRefine(uniqueIds("colours")),
+
+  flowerShapes: z
+    .array(
+      z.object({
+        id: slug("Shape id"),
+        name: required("Shape name", 40),
+        blurb: text(200),
+        price: z.number().int().min(0).max(100_000),
+        effort: text(80),
+        defaultColour: z.string().trim().max(40),
+        geometry: z.object({
+          petals: z.number().int().min(1).max(48),
+          layers: z.number().int().min(1).max(6),
+          petalLength: z.number().min(0.05).max(2),
+          petalWidth: z.number().min(0.02).max(1),
+          wireRadius: z.number().min(0.005).max(0.15),
+          openness: z.number().min(0).max(90),
+          layerTwist: z.number().min(0).max(180),
+          centre: z.number().min(0).max(1),
+          centreColour: z.string().trim().max(40).optional(),
+          stemLength: z.number().min(0.5).max(6),
+        }),
+      }),
+    )
+    .min(1, "You need at least one flower shape")
+    .max(40)
+    .superRefine(uniqueIds("shapes")),
+
+  wraps: z
+    .array(
+      z.object({
+        id: slug("Wrap id"),
+        name: required("Wrap name", 40),
+        blurb: text(200),
+        price: z.number().int().min(0).max(100_000),
+        hex: hex("Wrap colour"),
+      }),
+    )
+    .min(1)
+    .max(20)
+    .superRefine(uniqueIds("wraps")),
+
+  ribbons: z
+    .array(
+      z.object({
+        id: slug("Ribbon id"),
+        name: required("Ribbon name", 40),
+        price: z.number().int().min(0).max(100_000),
+        hex: hex("Ribbon colour"),
+      }),
+    )
+    .min(1)
+    .max(20)
+    .superRefine(uniqueIds("ribbons")),
+});
+
+export type MaterialsContent = z.infer<typeof materialsSchema>;

@@ -20,7 +20,10 @@ import path from "node:path";
  * the browser.
  * =========================================================================== */
 
-export type ContentFile = "content/site.json" | "content/products.json";
+export type ContentFile =
+  | "content/site.json"
+  | "content/products.json"
+  | "content/materials.json";
 
 export interface SaveResult {
   ok: boolean;

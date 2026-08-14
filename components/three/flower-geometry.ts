@@ -85,13 +85,50 @@ function stemGeometry(shape: FlowerShape, q: Quality): THREE.BufferGeometry {
 
 const cache = new Map<string, FlowerGeometry>();
 
+/**
+ * Cache key.
+ *
+ * Includes every geometry value, not just the shape id — otherwise editing a
+ * shape in the admin would keep handing back the flower built from the old
+ * numbers, and the live preview would appear frozen.
+ */
+function cacheKey(shape: FlowerShape, quality: Quality): string {
+  const g = shape.geometry;
+  return [
+    shape.id,
+    quality,
+    g.petals,
+    g.layers,
+    g.petalLength,
+    g.petalWidth,
+    g.wireRadius,
+    g.openness,
+    g.layerTwist,
+    g.centre,
+    g.stemLength,
+  ].join("|");
+}
+
 export function buildFlowerGeometry(
   shape: FlowerShape,
   quality: Quality = "high",
 ): FlowerGeometry {
-  const key = `${shape.id}|${quality}`;
+  const key = cacheKey(shape, quality);
   const hit = cache.get(key);
   if (hit) return hit;
+
+  // Editing a shape produces a new key every keystroke, so old geometry would
+  // pile up on the GPU. Evict the oldest once the cache gets unreasonable.
+  if (cache.size > 60) {
+    const oldest = cache.keys().next().value;
+    if (oldest) {
+      const stale = cache.get(oldest);
+      stale?.petals.dispose();
+      stale?.centre?.dispose();
+      stale?.stem.dispose();
+      cache.delete(oldest);
+    }
+  }
 
   const g = shape.geometry;
   const headY = g.stemLength;

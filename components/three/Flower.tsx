@@ -2,7 +2,11 @@
 
 import { useMemo } from "react";
 import * as THREE from "three";
-import { shape as shapeDef, type FlowerShapeId } from "@/lib/flowers";
+import {
+  shape as shapeDef,
+  type FlowerShape,
+  type FlowerShapeId,
+} from "@/lib/flowers";
 import { wire } from "@/lib/wire-colours";
 import { buildFlowerGeometry, type Quality } from "./flower-geometry";
 import { chenilleMaterial, haloMaterial } from "./chenille";
@@ -16,6 +20,13 @@ export interface FlowerProps {
   quality?: Quality;
   /** The fuzz halo. Worth the extra draw call on the hero; skipped on weak GPUs. */
   fuzz?: boolean;
+  /**
+   * Render these dimensions instead of the saved ones.
+   *
+   * Only the admin's live preview uses this: it needs to draw the shape as
+   * currently edited, which by definition isn't the one saved on disk yet.
+   */
+  def?: FlowerShape;
 }
 
 /**
@@ -28,8 +39,9 @@ export default function Flower({
   colour,
   quality = "high",
   fuzz = true,
+  def: override,
 }: FlowerProps) {
-  const def = shapeDef(shape);
+  const def = override ?? shapeDef(shape);
   const geo = useMemo(() => buildFlowerGeometry(def, quality), [def, quality]);
 
   const wireColour = wire(colour);

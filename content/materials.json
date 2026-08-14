@@ -1,0 +1,472 @@
+{
+  "_comment": "EDITED BY THE ADMIN PANEL AT /admin → Wire colours and Flower shapes. These drive the builder, the colour matcher, the shop filters and the 3D flowers.",
+  "wireColours": [
+    {
+      "id": "ruby",
+      "name": "Ruby",
+      "hex": "#c8102e",
+      "family": "pink",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "cherry",
+      "name": "Cherry",
+      "hex": "#e23e57",
+      "family": "pink",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "coral",
+      "name": "Coral",
+      "hex": "#ff7f6b",
+      "family": "pink",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "bubblegum",
+      "name": "Bubblegum",
+      "hex": "#ff8fb1",
+      "family": "pink",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "blush",
+      "name": "Blush",
+      "hex": "#f5a9c0",
+      "family": "pink",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "dusty-rose",
+      "name": "Dusty Rose",
+      "hex": "#c97b8e",
+      "family": "pink",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "wine",
+      "name": "Wine",
+      "hex": "#7d2338",
+      "family": "pink",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "tangerine",
+      "name": "Tangerine",
+      "hex": "#f2762e",
+      "family": "warm",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "marigold",
+      "name": "Marigold",
+      "hex": "#f5a623",
+      "family": "warm",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "sunbeam",
+      "name": "Sunbeam",
+      "hex": "#f7d34e",
+      "family": "warm",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "butter",
+      "name": "Butter",
+      "hex": "#f7e08a",
+      "family": "warm",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "peach",
+      "name": "Peach",
+      "hex": "#f7b58a",
+      "family": "warm",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "maroon",
+      "name": "Maroon",
+      "hex": "#6b2020",
+      "family": "warm",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "mint",
+      "name": "Mint",
+      "hex": "#7bc47f",
+      "family": "green",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "sage",
+      "name": "Sage",
+      "hex": "#9cb39a",
+      "family": "green",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "fern",
+      "name": "Fern",
+      "hex": "#4e8b4a",
+      "family": "green",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "forest",
+      "name": "Forest",
+      "hex": "#2f5d3a",
+      "family": "green",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "olive",
+      "name": "Olive",
+      "hex": "#8a8f4a",
+      "family": "green",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "powder",
+      "name": "Powder Blue",
+      "hex": "#a9c9e8",
+      "family": "cool",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "cobalt",
+      "name": "Cobalt",
+      "hex": "#3d6fd4",
+      "family": "cool",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "navy",
+      "name": "Navy",
+      "hex": "#23345e",
+      "family": "cool",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "teal",
+      "name": "Teal",
+      "hex": "#2f8f8f",
+      "family": "cool",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "lilac",
+      "name": "Lilac",
+      "hex": "#c4a6e0",
+      "family": "cool",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "violet",
+      "name": "Violet",
+      "hex": "#7a4fb0",
+      "family": "cool",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "plum",
+      "name": "Plum",
+      "hex": "#5b2a4e",
+      "family": "cool",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "ivory",
+      "name": "Ivory",
+      "hex": "#f3f0e6",
+      "family": "neutral",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "cream",
+      "name": "Cream",
+      "hex": "#ebe1cc",
+      "family": "neutral",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "taupe",
+      "name": "Taupe",
+      "hex": "#a99a8c",
+      "family": "neutral",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "onyx",
+      "name": "Onyx",
+      "hex": "#2f2a33",
+      "family": "neutral",
+      "metallic": false,
+      "inStock": true
+    },
+    {
+      "id": "gold",
+      "name": "Gold",
+      "hex": "#c9a227",
+      "family": "neutral",
+      "metallic": true,
+      "inStock": true
+    },
+    {
+      "id": "silver",
+      "name": "Silver",
+      "hex": "#c7cbd1",
+      "family": "neutral",
+      "metallic": true,
+      "inStock": true
+    },
+    {
+      "id": "rose-gold",
+      "name": "Rose Gold",
+      "hex": "#e0a98f",
+      "family": "neutral",
+      "metallic": true,
+      "inStock": true
+    }
+  ],
+  "flowerShapes": [
+    {
+      "id": "rose",
+      "name": "Rose",
+      "blurb": "Fifteen petals, spiralled tight. The one everyone asks for.",
+      "price": 120,
+      "effort": "about 25 minutes each",
+      "defaultColour": "ruby",
+      "geometry": {
+        "petals": 15,
+        "layers": 3,
+        "petalLength": 0.5,
+        "petalWidth": 0.32,
+        "wireRadius": 0.033,
+        "openness": 52,
+        "layerTwist": 26,
+        "centre": 0.06,
+        "centreColour": "",
+        "stemLength": 2.5
+      }
+    },
+    {
+      "id": "tulip",
+      "name": "Tulip",
+      "blurb": "Six upright petals, cupped closed. Clean and modern.",
+      "price": 100,
+      "effort": "about 15 minutes each",
+      "defaultColour": "blush",
+      "geometry": {
+        "petals": 6,
+        "layers": 2,
+        "petalLength": 0.54,
+        "petalWidth": 0.28,
+        "wireRadius": 0.036,
+        "openness": 16,
+        "layerTwist": 30,
+        "centre": 0.05,
+        "centreColour": "",
+        "stemLength": 2.6
+      }
+    },
+    {
+      "id": "daisy",
+      "name": "Daisy",
+      "blurb": "Twelve slim petals around a bright centre. Cheerful, quick.",
+      "price": 70,
+      "effort": "about 10 minutes each",
+      "defaultColour": "ivory",
+      "geometry": {
+        "petals": 12,
+        "layers": 1,
+        "petalLength": 0.46,
+        "petalWidth": 0.15,
+        "wireRadius": 0.03,
+        "openness": 74,
+        "layerTwist": 0,
+        "centre": 0.17,
+        "centreColour": "sunbeam",
+        "stemLength": 2.35
+      }
+    },
+    {
+      "id": "sunflower",
+      "name": "Sunflower",
+      "blurb": "Eighteen petals and a dark seeded middle. The showpiece.",
+      "price": 140,
+      "effort": "about 30 minutes each",
+      "defaultColour": "marigold",
+      "geometry": {
+        "petals": 18,
+        "layers": 2,
+        "petalLength": 0.52,
+        "petalWidth": 0.16,
+        "wireRadius": 0.03,
+        "openness": 70,
+        "layerTwist": 10,
+        "centre": 0.27,
+        "centreColour": "onyx",
+        "stemLength": 2.65
+      }
+    },
+    {
+      "id": "lily",
+      "name": "Lily",
+      "blurb": "Five pointed petals, swept back. The elegant one.",
+      "price": 130,
+      "effort": "about 20 minutes each",
+      "defaultColour": "ivory",
+      "geometry": {
+        "petals": 5,
+        "layers": 1,
+        "petalLength": 0.62,
+        "petalWidth": 0.19,
+        "wireRadius": 0.031,
+        "openness": 62,
+        "layerTwist": 0,
+        "centre": 0.08,
+        "centreColour": "marigold",
+        "stemLength": 2.55
+      }
+    },
+    {
+      "id": "bud",
+      "name": "Bud",
+      "blurb": "A small closed bloom. Good for filling gaps between the big ones.",
+      "price": 55,
+      "effort": "about 8 minutes each",
+      "defaultColour": "dusty-rose",
+      "geometry": {
+        "petals": 5,
+        "layers": 1,
+        "petalLength": 0.3,
+        "petalWidth": 0.19,
+        "wireRadius": 0.032,
+        "openness": 8,
+        "layerTwist": 0,
+        "centre": 0.03,
+        "centreColour": "",
+        "stemLength": 2.1
+      }
+    },
+    {
+      "id": "leaf",
+      "name": "Leaf",
+      "blurb": "Foliage. Not a flower, but a bouquet looks unfinished without it.",
+      "price": 45,
+      "effort": "about 5 minutes each",
+      "defaultColour": "fern",
+      "geometry": {
+        "petals": 3,
+        "layers": 1,
+        "petalLength": 0.62,
+        "petalWidth": 0.19,
+        "wireRadius": 0.028,
+        "openness": 48,
+        "layerTwist": 0,
+        "centre": 0,
+        "centreColour": "",
+        "stemLength": 2.2
+      }
+    }
+  ],
+  "wraps": [
+    {
+      "id": "kraft",
+      "name": "Kraft paper",
+      "blurb": "Plain brown, folded double. Understated.",
+      "price": 80,
+      "hex": "#b08a5e"
+    },
+    {
+      "id": "ivory",
+      "name": "Ivory tissue",
+      "blurb": "Soft, layered, slightly translucent.",
+      "price": 100,
+      "hex": "#efe6d6"
+    },
+    {
+      "id": "korean",
+      "name": "Korean wrap",
+      "blurb": "Matte film in a deep tone, the tall wrapped look.",
+      "price": 140,
+      "hex": "#3a2b3b"
+    },
+    {
+      "id": "mesh",
+      "name": "Plum mesh",
+      "blurb": "Open weave over paper. Catches the light.",
+      "price": 150,
+      "hex": "#6b3a5e"
+    },
+    {
+      "id": "none",
+      "name": "No wrap",
+      "blurb": "Stems tied bare with twine.",
+      "price": 0,
+      "hex": "#7a6a79"
+    }
+  ],
+  "ribbons": [
+    {
+      "id": "gold",
+      "name": "Gold satin",
+      "price": 40,
+      "hex": "#c9a227"
+    },
+    {
+      "id": "cream",
+      "name": "Cream satin",
+      "price": 35,
+      "hex": "#ebe1cc"
+    },
+    {
+      "id": "burgundy",
+      "name": "Burgundy velvet",
+      "price": 50,
+      "hex": "#7d2338"
+    },
+    {
+      "id": "sage",
+      "name": "Sage linen",
+      "price": 40,
+      "hex": "#9cb39a"
+    },
+    {
+      "id": "twine",
+      "name": "Bare twine",
+      "price": 15,
+      "hex": "#a99a8c"
+    }
+  ]
+}
