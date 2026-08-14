@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import type { SiteContent } from "@/lib/content-schema";
+import type { ProductsContent, SiteContent } from "@/lib/content-schema";
+import ProductsTab from "./ProductsTab";
 import clsx from "@/lib/clsx";
 
 /* ===========================================================================
@@ -13,6 +14,7 @@ import clsx from "@/lib/clsx";
  * =========================================================================== */
 
 type Tab =
+  | "products"
   | "shop"
   | "contact"
   | "banners"
@@ -22,6 +24,7 @@ type Tab =
   | "reviews";
 
 const TABS: { id: Tab; label: string; hint: string }[] = [
+  { id: "products", label: "Products", hint: "Pieces, prices, photos" },
   { id: "shop", label: "Shop details", hint: "Name, tagline, where you are" },
   { id: "contact", label: "Contact", hint: "Email, Messenger, hours" },
   { id: "banners", label: "Banners", hint: "Top strip, promo, graduation" },
@@ -136,21 +139,35 @@ function Repeater<T>({
   );
 }
 
-export default function AdminPanel({ initial }: { initial: SiteContent }) {
+export default function AdminPanel({
+  initial,
+  initialProducts,
+}: {
+  initial: SiteContent;
+  initialProducts: ProductsContent;
+}) {
   const [data, setData] = useState<SiteContent>(initial);
+  const [catalogue, setCatalogue] = useState<ProductsContent>(initialProducts);
   /* The last saved state. Kept separately from `initial` because after a save
      the server-rendered prop is stale — without this, "Undo all changes" would
      roll back to how things looked before the save you just made. */
   const [baseline, setBaseline] = useState<SiteContent>(initial);
-  const [tab, setTab] = useState<Tab>("shop");
+  const [productBaseline, setProductBaseline] =
+    useState<ProductsContent>(initialProducts);
+  const [tab, setTab] = useState<Tab>("products");
   const [saving, setSaving] = useState(false);
   const [result, setResult] = useState<{ ok: boolean; message: string } | null>(null);
   const [target, setTarget] = useState<"disk" | "github" | "nowhere" | null>(null);
 
-  const dirty = useMemo(
+  const contentDirty = useMemo(
     () => JSON.stringify(data) !== JSON.stringify(baseline),
     [data, baseline],
   );
+  const productsDirty = useMemo(
+    () => JSON.stringify(catalogue) !== JSON.stringify(productBaseline),
+    [catalogue, productBaseline],
+  );
+  const dirty = contentDirty || productsDirty;
 
   useEffect(() => {
     fetch("/api/admin/content")
@@ -170,26 +187,56 @@ export default function AdminPanel({ initial }: { initial: SiteContent }) {
   const patch = <K extends keyof SiteContent>(key: K, value: SiteContent[K]) =>
     setData((d) => ({ ...d, [key]: value }));
 
+  /** One PUT. Returns an error string, or null when it worked. */
+  const put = async (url: string, payload: unknown): Promise<string | null> => {
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const body = await response.json();
+
+    if (response.ok && body.ok) return null;
+
+    const detail = body.issues?.length
+      ? ` (${body.issues
+          .map((i: { path: string; message: string }) => `${i.path}: ${i.message}`)
+          .join("; ")})`
+      : "";
+    return `${body.error ?? body.message ?? "Save failed."}${detail}`;
+  };
+
   const save = async () => {
     setSaving(true);
     setResult(null);
     try {
-      const response = await fetch("/api/admin/content", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const body = await response.json();
+      const errors: string[] = [];
 
-      if (!response.ok || !body.ok) {
-        const detail = body.issues?.length
-          ? ` (${body.issues.map((i: { path: string; message: string }) => `${i.path}: ${i.message}`).join("; ")})`
-          : "";
-        setResult({ ok: false, message: `${body.error ?? body.message ?? "Save failed."}${detail}` });
-      } else {
-        setResult({ ok: true, message: body.message });
-        setBaseline(data);
+      // Only send what actually changed, so saving from the Products tab
+      // doesn't needlessly rewrite the site content file, and vice versa.
+      if (productsDirty) {
+        const error = await put("/api/admin/products", catalogue);
+        if (error) errors.push(error);
+        else setProductBaseline(catalogue);
       }
+
+      if (contentDirty) {
+        const error = await put("/api/admin/content", data);
+        if (error) errors.push(error);
+        else setBaseline(data);
+      }
+
+      setResult(
+        errors.length
+          ? { ok: false, message: errors.join(" · ") }
+          : {
+              ok: true,
+              message:
+                target === "github"
+                  ? "Saved and committed. Your host will redeploy — live in a minute or two."
+                  : "Saved. The page will refresh with your changes in a moment.",
+            },
+      );
     } catch {
       setResult({ ok: false, message: "Couldn't reach the server." });
     } finally {
@@ -257,6 +304,13 @@ export default function AdminPanel({ initial }: { initial: SiteContent }) {
 
         {/* panels */}
         <div className="flex flex-col gap-5 rounded-xl border border-line bg-ink p-5 sm:p-6">
+          {tab === "products" ? (
+            <ProductsTab
+              products={catalogue.products}
+              onChange={(products) => setCatalogue({ ...catalogue, products })}
+            />
+          ) : null}
+
           {tab === "shop" ? (
             <>
               <Field title="Shop name">
@@ -976,6 +1030,7 @@ export default function AdminPanel({ initial }: { initial: SiteContent }) {
             type="button"
             onClick={() => {
               setData(baseline);
+              setCatalogue(productBaseline);
               setResult(null);
             }}
             className="text-sm text-faint underline underline-offset-4 hover:text-cream-2"

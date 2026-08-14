@@ -20,7 +20,7 @@ import path from "node:path";
  * the browser.
  * =========================================================================== */
 
-const CONTENT_PATH = "content/site.json";
+export type ContentFile = "content/site.json" | "content/products.json";
 
 export interface SaveResult {
   ok: boolean;
@@ -42,15 +42,19 @@ function canWriteToDisk(): boolean {
   return process.env.NODE_ENV !== "production" || !githubConfig();
 }
 
-async function saveToDisk(json: string): Promise<SaveResult> {
-  const file = path.join(process.cwd(), CONTENT_PATH);
+/** Exported for the upload route, which makes the same choice. */
+export function canWriteLocally(): boolean {
+  return canWriteToDisk();
+}
+
+async function saveToDisk(json: string, file: ContentFile): Promise<SaveResult> {
+  const target = path.join(process.cwd(), file);
   try {
-    await fs.writeFile(file, json, "utf8");
+    await fs.writeFile(target, json, "utf8");
     return {
       ok: true,
       via: "disk",
-      message:
-        "Saved to content/site.json. The page will refresh with your changes in a moment.",
+      message: `Saved to ${file}. The page will refresh with your changes in a moment.`,
     };
   } catch (error) {
     return {
@@ -61,7 +65,7 @@ async function saveToDisk(json: string): Promise<SaveResult> {
   }
 }
 
-async function saveToGitHub(json: string): Promise<SaveResult> {
+async function saveToGitHub(json: string, CONTENT_PATH: ContentFile): Promise<SaveResult> {
   const config = githubConfig();
   if (!config) {
     return {
@@ -139,9 +143,77 @@ async function saveToGitHub(json: string): Promise<SaveResult> {
   }
 }
 
-export async function saveContent(data: unknown): Promise<SaveResult> {
+export async function saveContent(
+  data: unknown,
+  file: ContentFile = "content/site.json",
+): Promise<SaveResult> {
   const json = `${JSON.stringify(data, null, 2)}\n`;
-  return canWriteToDisk() ? saveToDisk(json) : saveToGitHub(json);
+  return canWriteToDisk() ? saveToDisk(json, file) : saveToGitHub(json, file);
+}
+
+/**
+ * Commit a binary file (a product photo) to the repo.
+ *
+ * Only reached when deployed — locally the upload route writes straight to
+ * public/photos/ instead.
+ */
+export async function commitBinary(
+  repoPath: string,
+  data: Buffer,
+  message: string,
+): Promise<SaveResult> {
+  const config = githubConfig();
+  if (!config) {
+    return {
+      ok: false,
+      via: "github",
+      message:
+        "No GitHub connection configured, so there's nowhere to put the photo. Set GITHUB_TOKEN and GITHUB_REPO in your hosting environment variables.",
+    };
+  }
+
+  const { token, repo, branch } = config;
+  const api = `https://api.github.com/repos/${repo}/contents/${repoPath}`;
+
+  try {
+    const put = await fetch(api, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+        "Content-Type": "application/json",
+      },
+      // New filename every upload, so there's never an existing SHA to supply.
+      body: JSON.stringify({
+        message,
+        content: data.toString("base64"),
+        branch,
+      }),
+    });
+
+    if (!put.ok) {
+      const detail = await put.text().catch(() => "");
+      return {
+        ok: false,
+        via: "github",
+        message: `GitHub rejected the photo (${put.status}). ${detail.slice(0, 200)}`,
+      };
+    }
+
+    return {
+      ok: true,
+      via: "github",
+      message:
+        "Photo uploaded. It appears on the live site once the redeploy finishes, a minute or two from now.",
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      via: "github",
+      message: `Couldn't reach GitHub: ${(error as Error).message}`,
+    };
+  }
 }
 
 /** Where a save would go, so the admin can tell the owner up front. */

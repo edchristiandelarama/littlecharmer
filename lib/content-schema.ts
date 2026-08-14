@@ -109,3 +109,78 @@ export const contentSchema = z.object({
 });
 
 export type SiteContent = z.infer<typeof contentSchema>;
+
+/* ---------------------------------------------------------------------------
+ * THE CATALOGUE — content/products.json
+ * ------------------------------------------------------------------------- */
+
+const SHAPES = ["rose", "tulip", "daisy", "sunflower", "lily", "bud", "leaf"] as const;
+const KINDS = ["bouquet", "mini", "stem"] as const;
+const OCCASIONS = [
+  "graduation",
+  "birthday",
+  "anniversary",
+  "proposal",
+  "wedding",
+  "get-well",
+  "thank-you",
+  "mothers-day",
+  "just-because",
+  "corporate",
+] as const;
+
+export const productsSchema = z.object({
+  _comment: z.string().optional(),
+  products: z
+    .array(
+      z.object({
+        /* The slug is the piece's web address, so it has to be URL-safe and
+           unique. Changing it breaks any link already shared. */
+        slug: z
+          .string()
+          .trim()
+          .min(1, "Each piece needs a web address")
+          .max(80)
+          .regex(
+            /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+            "Use lowercase letters, numbers and hyphens only",
+          ),
+        name: required("Product name", 80),
+        kind: z.enum(KINDS),
+        price: z.number().int().min(0).max(1_000_000),
+        occasions: z.array(z.enum(OCCASIONS)).max(10),
+        stems: z
+          .array(
+            z.object({
+              shape: z.enum(SHAPES),
+              colour: z.string().trim().min(1).max(40),
+              qty: z.number().int().min(1).max(60),
+            }),
+          )
+          .max(12),
+        wrap: z.string().trim().max(40),
+        ribbon: z.string().trim().max(40),
+        blurb: text(400),
+        story: text(1600).optional(),
+        photo: text(300).optional(),
+        featured: z.boolean().optional(),
+        bestseller: z.boolean().optional(),
+      }),
+    )
+    .max(80)
+    .superRefine((list, ctx) => {
+      const seen = new Set<string>();
+      list.forEach((p, i) => {
+        if (seen.has(p.slug)) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: [i, "slug"],
+            message: `"${p.slug}" is used twice — each piece needs its own web address`,
+          });
+        }
+        seen.add(p.slug);
+      });
+    }),
+});
+
+export type ProductsContent = z.infer<typeof productsSchema>;
