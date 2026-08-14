@@ -96,9 +96,21 @@ export default function Builder() {
   };
 
   return (
-    <div className="grid gap-px overflow-hidden rounded-xl border border-line-firm bg-line-firm lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.5fr)_minmax(0,1fr)]">
+    /*
+     * On a desktop this is a fixed-height tool, not a tall page section: the
+     * three panes each scroll on their own inside it.
+     *
+     * That's the only way the whole thing stays usable. Left to grow, every
+     * pane stretches to match the tallest — the summary, once a bouquet has a
+     * few kinds of stem in it — and the builder ends up over 2000px tall, so
+     * the 3D stage scrolls out of view while you're picking colours and the
+     * Add button sits permanently below the fold.
+     *
+     * On a phone it goes back to a normal stacked, page-scrolling layout.
+     */
+    <div className="grid gap-px overflow-hidden rounded-xl border border-line-firm bg-line-firm lg:h-[min(44rem,calc(100vh-8rem))] lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.5fr)_minmax(0,1fr)]">
       {/* ================= PANE 1 — shape, then colour ================= */}
-      <div className="flex flex-col gap-6 bg-ink p-5 sm:p-6">
+      <div className="flex min-h-0 flex-col gap-6 overflow-y-auto bg-ink p-5 sm:p-6">
         <div className="flex flex-col gap-3">
           <div className="flex items-baseline justify-between">
             <h2 className="eyebrow">Step 1 · Shape</h2>
@@ -195,28 +207,54 @@ export default function Builder() {
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={() => addActive(1)}
-          disabled={full}
-          className={clsx(
-            "mt-auto rounded-full px-5 py-3.5 font-semibold transition-colors",
-            full
-              ? "cursor-not-allowed bg-surface text-faint"
-              : "bg-petal text-ink hover:bg-petal-bright",
-          )}
-        >
-          {full
-            ? "That's a full bouquet"
-            : `Add ${shapeDef(activeShape).name.toLowerCase()} in ${wire(activeColour).name}`}
-        </button>
+        {/*
+          Sticks to the bottom of its own pane. The pane is the scroll container
+          now, which is what makes sticky work here — it wouldn't have while the
+          builder's `overflow-hidden` root was the nearest scrollable ancestor.
+        */}
+        <div className="sticky bottom-0 z-10 mt-auto flex flex-col gap-1.5 bg-ink pb-1 pt-3">
+          <button
+            type="button"
+            onClick={() => addActive(1)}
+            disabled={full}
+            className={clsx(
+              "flex items-center justify-center gap-2 rounded-full px-5 py-4 text-base font-semibold transition-colors",
+              full
+                ? "cursor-not-allowed bg-surface text-faint"
+                : "bg-petal text-ink shadow-glow hover:bg-petal-bright",
+            )}
+          >
+            {full ? (
+              "That's a full bouquet"
+            ) : (
+              <>
+                <span
+                  aria-hidden
+                  className="grid h-5 w-5 place-items-center rounded-full bg-ink/15 text-sm leading-none"
+                >
+                  +
+                </span>
+                Add {shapeDef(activeShape).name.toLowerCase()} in{" "}
+                {wire(activeColour).name}
+              </>
+            )}
+          </button>
+
+          <p className="text-center text-2xs text-faint">
+            Add as many as you like — adjust the numbers on the right.
+          </p>
+        </div>
       </div>
 
       {/* ================= PANE 2 — the stage ================= */}
-      <div className="relative min-h-[380px] bg-ink-2 lg:min-h-[600px]">
+      <div className="relative min-h-[380px] bg-ink-2 lg:min-h-0">
         {caps.ready && caps.render3D ? (
           <>
-            <BuilderStage build={build} quality={caps.quality} fuzz={caps.fuzz} />
+            <BuilderStage
+              build={build}
+              quality={caps.quality}
+              fuzz={caps.fuzz}
+            />
             <p className="pointer-events-none absolute inset-x-0 bottom-3 text-center text-2xs uppercase tracking-[0.18em] text-faint">
               Drag to spin · scroll to zoom
             </p>
@@ -244,13 +282,15 @@ export default function Builder() {
       </div>
 
       {/* ================= PANE 3 — summary ================= */}
-      <div className="flex flex-col gap-5 bg-ink p-5 sm:p-6">
+      <div className="flex min-h-0 flex-col gap-5 overflow-y-auto bg-ink p-5 sm:p-6">
         <div className="flex items-baseline justify-between">
           <h2 className="eyebrow">Your bouquet</h2>
           <div className="flex gap-3 text-2xs uppercase tracking-widest">
             <button
               type="button"
-              onClick={() => surprise(build.stems.length * 977 + stems * 31 + 7)}
+              onClick={() =>
+                surprise(build.stems.length * 977 + stems * 31 + 7)
+              }
               className="text-brass hover:underline"
             >
               Surprise me
@@ -292,7 +332,9 @@ export default function Builder() {
                   </span>
                   <span aria-hidden>−</span>
                 </button>
-                <span className="w-6 text-center text-sm tabular-nums">{s.qty}</span>
+                <span className="w-6 text-center text-sm tabular-nums">
+                  {s.qty}
+                </span>
                 <button
                   type="button"
                   onClick={() => setQty(i, s.qty + 1)}
@@ -312,7 +354,12 @@ export default function Builder() {
                   <span className="sr-only">
                     Remove all {shapeDef(s.shape).name}
                   </span>
-                  <svg viewBox="0 0 16 16" className="h-3 w-3" fill="none" aria-hidden>
+                  <svg
+                    viewBox="0 0 16 16"
+                    className="h-3 w-3"
+                    fill="none"
+                    aria-hidden
+                  >
                     <path
                       d="M4 4l8 8M12 4l-8 8"
                       stroke="currentColor"
@@ -388,8 +435,8 @@ export default function Builder() {
             </span>
           </div>
           <p className="text-xs text-muted">
-            An estimate, not a final price — we'll confirm it, along with timing,
-            when we reply.
+            An estimate, not a final price — we'll confirm it, along with
+            timing, when we reply.
           </p>
 
           <Link

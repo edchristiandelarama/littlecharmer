@@ -2,7 +2,8 @@ import Link from "next/link";
 import Accordion from "@/components/ui/Accordion";
 import SectionHead from "@/components/ui/SectionHead";
 import Reveal from "@/components/ui/Reveal";
-import { contact, faqs, messengerUrl } from "@/lib/site.config";
+import { faqs, messengerUrl } from "@/lib/site.config";
+import { EmailLink } from "@/components/ui/ContactActions";
 
 export default function Faq({ limit }: { limit?: number }) {
   const items = limit ? faqs.slice(0, limit) : faqs;
@@ -29,12 +30,9 @@ export default function Faq({ limit }: { limit?: number }) {
             >
               Ask us on Messenger
             </a>
-            <a
-              href={`mailto:${contact.email}`}
-              className="rounded-full border border-line-firm px-6 py-3 text-center text-sm transition-colors hover:border-petal hover:text-petal"
-            >
-              {contact.email}
-            </a>
+            <EmailLink className="block rounded-full border border-line-firm px-6 py-3 text-center text-sm transition-colors hover:border-petal hover:text-petal">
+              Email us
+            </EmailLink>
           </Reveal>
         </div>
 

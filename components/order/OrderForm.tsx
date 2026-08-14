@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useForm, type Resolver } from "react-hook-form";
 import BouquetSvg from "@/components/bouquet/BouquetSvg";
-import CardPreview from "./CardPreview";
 import {
   budgetBands,
   contactMethods,
@@ -18,7 +17,8 @@ import { occasions, formatPeso, productBySlug } from "@/lib/products";
 import { buildTotal, decodeBuild, describeBuild } from "@/lib/build-encode";
 import { ribbonById, wrapById } from "@/lib/flowers";
 import { contact, fulfilment, messengerUrl } from "@/lib/site.config";
-import { orderShortText, orderPlainText } from "@/lib/order-message";
+import { orderPlainText } from "@/lib/order-message";
+import { EmailLink, MessengerOrderButton } from "@/components/ui/ContactActions";
 import clsx from "@/lib/clsx";
 
 /* Small custom resolver so the same zod schema validates the form and the API
@@ -108,9 +108,9 @@ export default function OrderForm() {
   }, [buildParam, productParam, setValue]);
 
   const contactMethod = watch("contactMethod");
-  const cardMessage = watch("cardMessage") ?? "";
-  const recipient = watch("recipientName") ?? "";
-  const senderName = watch("name") ?? "";
+
+  // Bound the date picker to today onward.
+  const today = new Date().toISOString().slice(0, 10);
 
   const onSubmit = handleSubmit(async (values) => {
     setServerError(null);
@@ -144,7 +144,6 @@ export default function OrderForm() {
 
   /* ----------------------------------------------------------------- done */
   if (outcome) {
-    const short = orderShortText(outcome.order, outcome.reference);
     const full = orderPlainText(outcome.order, outcome.reference);
 
     return (
@@ -182,23 +181,18 @@ export default function OrderForm() {
           </p>
         </div>
 
-        <div className="flex flex-col gap-2.5">
-          <a
-            href={`${messengerUrl}?text=${encodeURIComponent(short)}`}
-            target="_blank"
-            rel="noreferrer noopener"
-            className="rounded-full bg-brass px-6 py-3.5 font-semibold text-ink transition-colors hover:bg-brass-bright"
-          >
-            Send it on Messenger
-          </a>
-          <a
-            href={`mailto:${contact.email}?subject=${encodeURIComponent(
-              `Order request ${outcome.reference}`,
-            )}&body=${encodeURIComponent(full)}`}
-            className="rounded-full border border-line-firm px-6 py-3 transition-colors hover:border-petal hover:text-petal"
+        <div className="flex flex-col gap-5 text-left">
+          <MessengerOrderButton
+            text={full}
+            className="w-full rounded-full bg-brass px-6 py-3.5 text-center font-semibold text-ink transition-colors hover:bg-brass-bright"
+          />
+          <EmailLink
+            subject={`Order request ${outcome.reference}`}
+            body={full}
+            className="w-full rounded-full border border-line-firm px-6 py-3 text-center transition-colors hover:border-petal hover:text-petal"
           >
             Send it by email instead
-          </a>
+          </EmailLink>
         </div>
 
         <div className="flex flex-col gap-3 border-t border-line pt-5 text-left">
@@ -371,9 +365,10 @@ export default function OrderForm() {
               error={errors.preferredDate?.message}
             >
               <input
-                type="text"
+                type="date"
+                // Nobody needs a bouquet for last Tuesday.
+                min={today}
                 className={inputClass}
-                placeholder="Graduation on 12 April"
                 {...register("preferredDate")}
               />
             </Field>
@@ -400,18 +395,6 @@ export default function OrderForm() {
               {...register("colours")}
             />
           </Field>
-        </fieldset>
-
-        {/* --- the card --- */}
-        <fieldset className="flex flex-col gap-4 border-t border-line pt-7">
-          <legend className="eyebrow mb-2">The card</legend>
-          <CardPreview
-            value={cardMessage}
-            to={recipient}
-            from={senderName}
-            onChange={(v) => setValue("cardMessage", v, { shouldValidate: true })}
-            error={errors.cardMessage?.message}
-          />
         </fieldset>
 
         {/* --- extras --- */}

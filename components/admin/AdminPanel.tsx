@@ -160,10 +160,11 @@ export default function AdminPanel({
 }) {
   const [data, setData] = useState<SiteContent>(initial);
   const [catalogue, setCatalogue] = useState<ProductsContent>(initialProducts);
-  /* The last saved state. Kept separately from `initial` because after a save
-     the server-rendered prop is stale — without this, "Undo all changes" would
-     roll back to how things looked before the save you just made. */
   const [materials, setMaterials] = useState<MaterialsContent>(initialMaterials);
+
+  /* The last saved state, one per file. Kept separately from the `initial`
+     props because after a save those are stale — without this, "Undo all
+     changes" would roll back to before the save you just made. */
   const [baseline, setBaseline] = useState<SiteContent>(initial);
   const [productBaseline, setProductBaseline] =
     useState<ProductsContent>(initialProducts);

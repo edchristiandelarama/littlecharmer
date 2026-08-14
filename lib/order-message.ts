@@ -56,12 +56,6 @@ export function orderLines(order: OrderInput, reference: string): string[] {
     lines.push(`Estimate: ${formatPeso(buildTotal(build))}`);
   }
 
-  if (order.cardMessage?.trim()) {
-    lines.push("");
-    lines.push("--- Card message ---");
-    lines.push(order.cardMessage.trim());
-  }
-
   if (order.notes?.trim()) {
     lines.push("");
     lines.push("--- Notes ---");

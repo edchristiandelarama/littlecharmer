@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Accordion from "@/components/ui/Accordion";
 import SectionHead from "@/components/ui/SectionHead";
 import ShippingPanel from "@/components/sections/ShippingPanel";
+import { EmailLink } from "@/components/ui/ContactActions";
 import { contact, faqs, fulfilment, messengerUrl } from "@/lib/site.config";
 
 export const metadata: Metadata = {
@@ -36,12 +37,9 @@ export default function FaqPage() {
               >
                 Message us
               </a>
-              <a
-                href={`mailto:${contact.email}`}
-                className="rounded-full border border-line-firm px-5 py-2.5 text-center text-sm transition-colors hover:border-petal hover:text-petal"
-              >
+              <EmailLink className="block rounded-full border border-line-firm px-5 py-2.5 text-center text-sm transition-colors hover:border-petal hover:text-petal">
                 Email instead
-              </a>
+              </EmailLink>
             </div>
 
             <div className="flex flex-col gap-2 rounded-xl border border-line p-5 text-sm">

@@ -79,8 +79,6 @@ export const orderSchema = z.object({
 
   recipientName: z.string().trim().max(80).optional(),
 
-  cardMessage: z.string().trim().max(400, "Cards fit about 400 characters").optional(),
-
   notes: z.string().trim().max(1500, "Please keep this under 1500 characters").optional(),
 
   /* --- what they're referring to ---------------------------------------- */
