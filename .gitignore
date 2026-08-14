@@ -1,7 +1,13 @@
+# Build output.
+#
+# The leading slash matters: it anchors each pattern to the repo root. Without
+# it, `build/` also matched `app/build/` — the Build Your Own page — so that
+# page was silently never committed, and 404'd on the deployed site while
+# working perfectly on this machine.
 node_modules/
-.next/
-out/
-build/
+/.next/
+/out/
+/build/
 .DS_Store
 *.pem
 
