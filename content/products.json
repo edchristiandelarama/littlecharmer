@@ -5,7 +5,7 @@
       "slug": "sunday-blush",
       "name": "Sunday Blush",
       "kind": "bouquet",
-      "price": 1450,
+      "price": 750,
       "occasions": [
         "birthday",
         "just-because",
@@ -15,33 +15,32 @@
       "stems": [
         {
           "shape": "rose",
-          "colour": "blush",
-          "qty": 6
-        },
-        {
-          "shape": "tulip",
-          "colour": "ivory",
-          "qty": 4
-        },
-        {
-          "shape": "bud",
-          "colour": "dusty-rose",
+          "colour": "ruby",
           "qty": 3
         },
         {
+          "shape": "sunflower",
+          "colour": "sunbeam",
+          "qty": 2
+        },
+        {
+          "shape": "lily",
+          "colour": "wine",
+          "qty": 1
+        },
+        {
           "shape": "leaf",
-          "colour": "sage",
-          "qty": 4
+          "colour": "fern",
+          "qty": 2
         }
       ],
       "wrap": "ivory",
-      "ribbon": "cream",
-      "blurb": "Soft pinks and ivory, the quietest thing we make. The one to send when you don't need a reason.",
+      "ribbon": "burgundy",
+      "blurb": "Soft red and yellow, the quietest thing we make. The one to send when you don't need a reason.",
       "story": "This started as a bouquet for someone's mother and turned into the piece we make most often. Nothing in it shouts — the blush roses are two shades apart so the whole thing reads as one colour until you look closely.",
       "photos": [
-        "/photos/sunday-blush-1-msui2qs6.jpg",
-        "/photos/sunday-blush-2-msuhsxol.jpg",
-        "/photos/sunday-blush-3-msuht808.jpg"
+        "/photos/sunday-blush-1-msujtw7y.jpg",
+        "/photos/sunday-blush-2-msuju0v9.jpg"
       ],
       "featured": true,
       "bestseller": true
