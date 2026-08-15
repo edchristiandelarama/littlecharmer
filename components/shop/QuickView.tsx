@@ -124,7 +124,7 @@ export default function QuickView({
                 interval={2600}
                 sizes="(min-width: 640px) 45vw, 100vw"
                 showDots
-                className="absolute inset-0"
+                className="h-full w-full"
               />
             ) : (
               <div className="grid h-full place-items-center p-8">

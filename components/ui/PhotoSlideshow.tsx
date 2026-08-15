@@ -72,6 +72,17 @@ export default function PhotoSlideshow({
   if (photos.length === 0) return null;
 
   return (
+    /*
+     * `relative` here is load-bearing: the images use next/image `fill`, which
+     * needs a positioned parent WITH A HEIGHT.
+     *
+     * So callers must size this box — `h-full w-full` inside a sized parent, or
+     * an aspect ratio of its own. Passing `absolute inset-0` looks like it would
+     * work and doesn't: `absolute` and `relative` both set `position`, the
+     * stylesheet order decides which wins rather than the class attribute, and
+     * when `relative` won the box collapsed to zero height. The photos loaded
+     * perfectly and were rendered 368×0 — invisible, with no error anywhere.
+     */
     <div className={clsx("relative", className)}>
       {photos.map((src, i) => (
         <Image

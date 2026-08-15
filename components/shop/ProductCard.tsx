@@ -100,7 +100,7 @@ export default function ProductCard({
             sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
             priority={priority}
             showDots
-            className="absolute inset-0"
+            className="h-full w-full"
             imageClassName="transition-transform duration-700 ease-[var(--ease-out-soft)] group-hover:scale-[1.045]"
           />
         ) : (

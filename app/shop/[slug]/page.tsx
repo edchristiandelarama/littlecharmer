@@ -100,7 +100,7 @@ export default async function ProductPage({
               sizes="(min-width: 1024px) 46vw, 92vw"
               priority
               showDots
-              className="absolute inset-0"
+              className="h-full w-full"
             />
           ) : (
             <div className="grid h-full place-items-center p-10">

@@ -341,7 +341,7 @@ export default function ColoursTab({
           ))}
         </ul>
 
-        {wraps.length < 5 ? (
+        {true ? (
           <button
             type="button"
             onClick={() =>
@@ -357,7 +357,7 @@ export default function ColoursTab({
             }
             className="self-start rounded-full border border-dashed border-line-firm px-4 py-1.5 text-sm text-cream-2 hover:border-brass hover:text-brass"
           >
-            + Add a wrap colour ({wraps.length}/5)
+            + Add a wrap colour
           </button>
         ) : (
           <p className="text-2xs text-faint">Five is the maximum.</p>
@@ -438,7 +438,7 @@ export default function ColoursTab({
           ))}
         </ul>
 
-        {ribbons.length < 8 ? (
+        {true ? (
           <button
             type="button"
             onClick={() =>

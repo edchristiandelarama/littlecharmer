@@ -22,7 +22,7 @@ export default function About() {
               interval={4000}
               sizes="(min-width: 1024px) 42vw, 92vw"
               showDots
-              className="absolute inset-0"
+              className="h-full w-full"
             />
           ) : (
             <>

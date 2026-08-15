@@ -290,7 +290,7 @@ export const materialsSchema = z.object({
       }),
     )
     .min(1)
-    .max(5, "Five wrap colours is the maximum")
+    .max(40)
     .superRefine(uniqueIds("wraps")),
 
   ribbons: z
@@ -303,7 +303,7 @@ export const materialsSchema = z.object({
       }),
     )
     .min(1)
-    .max(8)
+    .max(40)
     .superRefine(uniqueIds("ribbons")),
 });
 
