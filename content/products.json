@@ -91,7 +91,7 @@
       "slug": "first-confession",
       "name": "First Confession",
       "kind": "bouquet",
-      "price": 2850,
+      "price": 850,
       "occasions": [
         "proposal",
         "anniversary"
@@ -117,7 +117,10 @@
       "ribbon": "burgundy",
       "blurb": "Twelve ruby roses, wrapped tall and dark. For the question you only ask once.",
       "story": "Twelve roses is about five hours of work, and it shows — the petals on these are shaped more deeply than on anything else we make. Wrapped in dark matte film so the red is the only colour you see.",
-      "photos": [],
+      "photos": [
+        "/photos/first-confession-1-msujz4ap.jpg",
+        "/photos/first-confession-2-msujz800.jpg"
+      ],
       "featured": true,
       "bestseller": false
     },
