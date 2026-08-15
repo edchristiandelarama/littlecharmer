@@ -184,44 +184,9 @@
       "inStock": true
     },
     {
-      "id": "cream",
-      "name": "Cream",
-      "hex": "#ebe1cc",
-      "metallic": false,
-      "inStock": true
-    },
-    {
-      "id": "taupe",
-      "name": "Taupe",
-      "hex": "#a99a8c",
-      "metallic": false,
-      "inStock": true
-    },
-    {
-      "id": "onyx",
-      "name": "Onyx",
-      "hex": "#2f2a33",
-      "metallic": false,
-      "inStock": true
-    },
-    {
       "id": "gold",
       "name": "Gold",
       "hex": "#c9a227",
-      "metallic": true,
-      "inStock": true
-    },
-    {
-      "id": "silver",
-      "name": "Silver",
-      "hex": "#c7cbd1",
-      "metallic": true,
-      "inStock": true
-    },
-    {
-      "id": "rose-gold",
-      "name": "Rose Gold",
-      "hex": "#e0a98f",
       "metallic": true,
       "inStock": true
     }
@@ -454,6 +419,7 @@
       "price": 45,
       "effort": "about 5 minutes each",
       "defaultColour": "fern",
+      "foliage": true,
       "geometry": {
         "petals": 3,
         "layers": 1,
@@ -465,8 +431,7 @@
         "centre": 0,
         "centreColour": "",
         "stemLength": 2.2
-      },
-      "foliage": true
+      }
     },
     {
       "id": "eucalyptus",
@@ -536,64 +501,64 @@
     {
       "id": "kraft",
       "name": "Kraft brown",
-      "hex": "#b08a5e",
-      "price": 80
+      "price": 80,
+      "hex": "#b08a5e"
     },
     {
       "id": "ivory",
       "name": "Ivory",
-      "hex": "#efe6d6",
-      "price": 100
+      "price": 100,
+      "hex": "#efe6d6"
     },
     {
       "id": "charcoal",
       "name": "Charcoal",
-      "hex": "#3a2b3b",
-      "price": 140
+      "price": 140,
+      "hex": "#3a2b3b"
     },
     {
       "id": "plum",
       "name": "Plum",
-      "hex": "#6b3a5e",
-      "price": 150
+      "price": 150,
+      "hex": "#6b3a5e"
     },
     {
       "id": "sage",
       "name": "Sage",
-      "hex": "#93a58e",
-      "price": 120
+      "price": 120,
+      "hex": "#93a58e"
     }
   ],
   "ribbons": [
     {
       "id": "gold",
       "name": "Gold",
-      "hex": "#c9a227",
-      "price": 40
+      "price": 40,
+      "hex": "#c9a227"
     },
     {
       "id": "cream",
       "name": "Cream",
-      "hex": "#ebe1cc",
-      "price": 35
+      "price": 35,
+      "hex": "#ebe1cc"
     },
     {
       "id": "burgundy",
       "name": "Burgundy",
-      "hex": "#7d2338",
-      "price": 50
+      "price": 50,
+      "hex": "#7d2338"
     },
     {
       "id": "sage",
       "name": "Sage",
-      "hex": "#9cb39a",
-      "price": 40
+      "price": 40,
+      "hex": "#9cb39a"
     },
     {
       "id": "twine",
       "name": "Bare twine",
-      "hex": "#a99a8c",
-      "price": 15
+      "price": 15,
+      "hex": "#a99a8c"
     }
   ]
 }
