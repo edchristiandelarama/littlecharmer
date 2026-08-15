@@ -156,7 +156,9 @@
       "ribbon": "twine",
       "blurb": "Three blooms and a bit of green, tied with twine. The piece the shop is named after.",
       "story": "The first thing we ever made, and still the one we'd recommend if you've never ordered from us. Small enough to sit on a desk, cheap enough to send for no reason at all.",
-      "photos": [],
+      "photos": [
+        "/photos/the-little-charmer-1-msuk04jw.jpg"
+      ],
       "featured": false,
       "bestseller": true
     },
