@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useForm, type Resolver } from "react-hook-form";
 import BouquetSvg from "@/components/bouquet/BouquetSvg";
+import PhotoSlideshow from "@/components/ui/PhotoSlideshow";
 import {
   budgetBands,
   contactMethods,
@@ -13,9 +14,15 @@ import {
   orderSchemaWithContact,
   type OrderInput,
 } from "@/lib/order-schema";
-import { occasions, formatPeso, productBySlug } from "@/lib/products";
+import {
+  occasions,
+  formatPeso,
+  productBySlug,
+  productPhotos,
+} from "@/lib/products";
 import { buildTotal, decodeBuild, describeBuild } from "@/lib/build-encode";
 import { ribbonById, wrapById } from "@/lib/flowers";
+import { isInStock, isLight, wireColours } from "@/lib/wire-colours";
 import { contact, fulfilment, messengerUrl } from "@/lib/site.config";
 import { orderPlainText } from "@/lib/order-message";
 import { EmailLink, MessengerOrderButton } from "@/components/ui/ContactActions";
@@ -111,6 +118,24 @@ export default function OrderForm() {
 
   // Bound the date picker to today onward.
   const today = new Date().toISOString().slice(0, 10);
+
+  /*
+   * The colour field stays a single string — it goes straight into the order
+   * email, where "Ruby, Gold" reads better than a list of ids. The swatches
+   * just edit that string.
+   */
+  const colourText = watch("colours") ?? "";
+  const chosenColours = colourText
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  const toggleColour = (name: string) => {
+    const next = chosenColours.includes(name)
+      ? chosenColours.filter((c) => c !== name)
+      : [...chosenColours, name];
+    setValue("colours", next.join(", "), { shouldValidate: true });
+  };
 
   const onSubmit = handleSubmit(async (values) => {
     setServerError(null);
@@ -383,17 +408,65 @@ export default function OrderForm() {
             </Field>
           </div>
 
+          {/*
+            Pick from the real shelf rather than typing a colour name and hoping.
+            Still free text underneath, because "to match her sablay" carries
+            information no swatch does.
+          */}
           <Field
             label="Colours you'd like"
-            hint="Name them, or describe what you're matching — a gown, a sablay, school colours"
+            hint="Tap the ones you want — or describe what you're matching below"
             error={errors.colours?.message}
           >
-            <input
-              type="text"
-              className={inputClass}
-              placeholder="Maroon and gold, to match her sablay"
-              {...register("colours")}
-            />
+            <div className="flex flex-col gap-3">
+              <ul className="grid grid-cols-8 gap-2 sm:grid-cols-12">
+                {wireColours.filter(isInStock).map((c) => {
+                  const on = chosenColours.includes(c.name);
+                  return (
+                    <li key={c.id}>
+                      <button
+                        type="button"
+                        onClick={() => toggleColour(c.name)}
+                        aria-pressed={on}
+                        title={c.name}
+                        className={clsx(
+                          "relative grid aspect-square w-full place-items-center rounded-full ring-1 ring-inset ring-black/30 transition-transform",
+                          on
+                            ? "scale-110 outline outline-2 outline-offset-2 outline-brass"
+                            : "hover:scale-110",
+                        )}
+                        style={{ backgroundColor: c.hex }}
+                      >
+                        <span className="sr-only">{c.name}</span>
+                        {on ? (
+                          <svg
+                            viewBox="0 0 16 16"
+                            className="h-3.5 w-3.5 drop-shadow"
+                            fill="none"
+                            aria-hidden
+                          >
+                            <path
+                              d="M3 8.5l3.5 3.5L13 5"
+                              stroke={isLight(c.hex) ? "#241e2b" : "#ffffff"}
+                              strokeWidth="2.2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        ) : null}
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+
+              <input
+                type="text"
+                className={inputClass}
+                placeholder="Maroon and gold, to match her sablay"
+                {...register("colours")}
+              />
+            </div>
           </Field>
         </fieldset>
 
@@ -484,16 +557,30 @@ export default function OrderForm() {
         ) : product ? (
           <div className="flex flex-col gap-4 rounded-xl border border-line-firm bg-surface/50 p-5">
             <h2 className="eyebrow">You're ordering</h2>
-            <div className="grid place-items-center rounded-lg bg-ink/50 p-4">
-              <BouquetSvg
-                stems={product.stems}
-                wrapHex={wrapById(product.wrap).hex}
-                ribbonHex={ribbonById(product.ribbon).hex}
-                showWrap={product.kind !== "stem"}
-                title={product.name}
-                className="h-48 w-auto"
+            {/* The photograph, when there is one — this panel used to always
+                draw the illustration, so an uploaded photo never appeared. */}
+            {productPhotos(product).length > 0 ? (
+              <PhotoSlideshow
+                photos={productPhotos(product)}
+                alt={product.name}
+                mode="auto"
+                interval={3000}
+                sizes="(min-width: 1024px) 26vw, 92vw"
+                showDots
+                className="aspect-[4/5] overflow-hidden rounded-lg"
               />
-            </div>
+            ) : (
+              <div className="grid place-items-center rounded-lg bg-ink/50 p-4">
+                <BouquetSvg
+                  stems={product.stems}
+                  wrapHex={wrapById(product.wrap).hex}
+                  ribbonHex={ribbonById(product.ribbon).hex}
+                  showWrap={product.kind !== "stem"}
+                  title={product.name}
+                  className="h-48 w-auto"
+                />
+              </div>
+            )}
             <div>
               <p className="font-display text-2xl">{product.name}</p>
               <p className="font-display text-lg text-brass">

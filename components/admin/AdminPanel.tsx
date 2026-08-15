@@ -8,6 +8,7 @@ import type {
 } from "@/lib/content-schema";
 import ProductsTab from "./ProductsTab";
 import PhotoField from "./PhotoField";
+import PhotoList from "./PhotoList";
 import ColoursTab from "./ColoursTab";
 import FlowersTab from "./FlowersTab";
 import clsx from "@/lib/clsx";
@@ -34,7 +35,7 @@ type Tab =
 
 const TABS: { id: Tab; label: string; hint: string }[] = [
   { id: "products", label: "Products", hint: "Pieces, prices, photos" },
-  { id: "colours", label: "Wire colours", hint: "Your chenille stock" },
+  { id: "colours", label: "Colours", hint: "Wire, wraps and ribbons" },
   { id: "flowers", label: "Flower shapes", hint: "Shapes, prices, 3D form" },
   { id: "shop", label: "Shop details", hint: "Name, tagline, where you are" },
   { id: "contact", label: "Contact", hint: "Email, Messenger, hours" },
@@ -343,9 +344,15 @@ export default function AdminPanel({
           {tab === "colours" ? (
             <ColoursTab
               colours={materials.wireColours}
+              wraps={materials.wraps}
+              ribbons={materials.ribbons}
               products={catalogue.products}
               shapes={materials.flowerShapes}
-              onChange={(wireColours) => setMaterials({ ...materials, wireColours })}
+              onChangeColours={(wireColours) =>
+                setMaterials({ ...materials, wireColours })
+              }
+              onChangeWraps={(wraps) => setMaterials({ ...materials, wraps })}
+              onChangeRibbons={(ribbons) => setMaterials({ ...materials, ribbons })}
             />
           ) : null}
 
@@ -866,13 +873,15 @@ export default function AdminPanel({
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <Field
-                  title="Photo"
-                  hint="A picture of you working. Blank shows the drawn panel."
+                  title="Photos"
+                  hint="Up to three, fading one to the next. Blank shows the drawn panel."
                 >
-                  <PhotoField
-                    value={data.about.photo}
-                    productName="about"
-                    onChange={(photo) => patch("about", { ...data.about, photo })}
+                  <PhotoList
+                    photos={data.about.photos ?? []}
+                    name="about"
+                    max={3}
+                    coverLabel="First photo"
+                    onChange={(photos) => patch("about", { ...data.about, photos })}
                   />
                 </Field>
                 <Field title="Photo caption">

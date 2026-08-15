@@ -15,13 +15,8 @@ import {
   wrapById,
   wraps,
 } from "@/lib/flowers";
-import {
-  isInStock,
-  wire,
-  wireFamilies,
-  wiresInFamily,
-  type WireFamily,
-} from "@/lib/wire-colours";
+import { wire } from "@/lib/wire-colours";
+import ColourChoice from "@/components/ui/ColourChoice";
 import {
   MAX_STEMS,
   buildStemCount,
@@ -67,7 +62,6 @@ export default function Builder() {
     surprise,
   } = useBuilder();
 
-  const [family, setFamily] = useState<WireFamily>("pink");
   const [copied, setCopied] = useState(false);
 
   // A shared link wins over the starter bouquet, but only on first load.
@@ -149,59 +143,21 @@ export default function Builder() {
         </div>
 
         <div className="flex flex-col gap-3 border-t border-line pt-5">
-          <h2 className="eyebrow">Step 2 · Colour</h2>
-
-          {/* This is the point of the whole shop: every shape, every colour. */}
-          <div className="flex flex-wrap gap-1.5">
-            {wireFamilies.map((f) => (
-              <button
-                key={f.id}
-                type="button"
-                onClick={() => setFamily(f.id)}
-                aria-pressed={family === f.id}
-                className={clsx(
-                  "rounded-full px-2.5 py-1 text-2xs uppercase tracking-widest transition-colors",
-                  family === f.id
-                    ? "bg-surface-2 text-cream"
-                    : "text-faint hover:text-cream-2",
-                )}
-              >
-                {f.label}
-              </button>
-            ))}
+          <div className="flex items-baseline justify-between gap-3">
+            <h2 className="eyebrow">Step 2 · Colour</h2>
+            <span className="text-2xs text-faint">
+              every shape, every colour
+            </span>
           </div>
 
-          <ul className="grid grid-cols-6 gap-2 sm:grid-cols-8 lg:grid-cols-6">
-            {wiresInFamily(family).map((c) => {
-              const selected = activeColour === c.id;
-              return (
-                <li key={c.id}>
-                  <button
-                    type="button"
-                    onClick={() => setActiveColour(c.id)}
-                    aria-pressed={selected}
-                    title={`${c.name}${isInStock(c) ? "" : " — out of stock"}`}
-                    className={clsx(
-                      "relative grid aspect-square w-full place-items-center rounded-full ring-1 ring-inset ring-black/30 transition-transform",
-                      selected
-                        ? "scale-110 outline outline-2 outline-offset-2 outline-brass"
-                        : "hover:scale-105",
-                      !isInStock(c) && "opacity-35",
-                    )}
-                    style={{ backgroundColor: c.hex }}
-                  >
-                    <span className="sr-only">{c.name}</span>
-                    {c.metallic ? (
-                      <span
-                        aria-hidden
-                        className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/55 to-transparent"
-                      />
-                    ) : null}
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
+          {/* One flat shelf. Grouping these behind tabs made people think a
+              colour was unavailable when it was just under another tab. */}
+          <ColourChoice
+            value={activeColour}
+            onChange={setActiveColour}
+            columns="grid-cols-8 sm:grid-cols-10 lg:grid-cols-8"
+            label={false}
+          />
 
           <p className="text-xs text-muted">
             {wire(activeColour).name}
@@ -391,35 +347,68 @@ export default function Builder() {
         <div className="flex flex-col gap-3 border-t border-line pt-4">
           <h3 className="eyebrow">Step 3 · Finish</h3>
 
-          <label className="flex flex-col gap-1.5 text-xs text-muted">
-            Wrap
-            <select
-              value={build.wrap}
-              onChange={(e) => setWrap(e.target.value)}
-              className="rounded-lg border border-line-firm bg-surface px-3 py-2.5 text-sm text-cream"
-            >
+          {/* Wrap and ribbon are colour choices, not a list of paper types —
+              swatches say what a dropdown of names never could. */}
+          <div className="flex flex-col gap-2">
+            <span className="text-xs text-muted">Wrap colour</span>
+            <ul className="flex flex-wrap gap-2">
               {wraps.map((w) => (
-                <option key={w.id} value={w.id}>
-                  {w.name} — {w.price === 0 ? "free" : formatPeso(w.price)}
-                </option>
+                <li key={w.id}>
+                  <button
+                    type="button"
+                    onClick={() => setWrap(w.id)}
+                    aria-pressed={build.wrap === w.id}
+                    title={`${w.name} — ${formatPeso(w.price)}`}
+                    className={clsx(
+                      "grid h-9 w-9 place-items-center rounded-full ring-1 ring-inset ring-black/30 transition-transform",
+                      build.wrap === w.id
+                        ? "scale-110 outline outline-2 outline-offset-2 outline-brass"
+                        : "hover:scale-105",
+                    )}
+                    style={{ backgroundColor: w.hex }}
+                  >
+                    <span className="sr-only">
+                      {w.name}, {formatPeso(w.price)}
+                    </span>
+                  </button>
+                </li>
               ))}
-            </select>
-          </label>
+            </ul>
+            <p className="text-2xs text-faint">
+              {wrapById(build.wrap).name} · {formatPeso(wrapById(build.wrap).price)}
+            </p>
+          </div>
 
-          <label className="flex flex-col gap-1.5 text-xs text-muted">
-            Ribbon
-            <select
-              value={build.ribbon}
-              onChange={(e) => setRibbon(e.target.value)}
-              className="rounded-lg border border-line-firm bg-surface px-3 py-2.5 text-sm text-cream"
-            >
+          <div className="flex flex-col gap-2">
+            <span className="text-xs text-muted">Ribbon colour</span>
+            <ul className="flex flex-wrap gap-2">
               {ribbons.map((r) => (
-                <option key={r.id} value={r.id}>
-                  {r.name} — {formatPeso(r.price)}
-                </option>
+                <li key={r.id}>
+                  <button
+                    type="button"
+                    onClick={() => setRibbon(r.id)}
+                    aria-pressed={build.ribbon === r.id}
+                    title={`${r.name} — ${formatPeso(r.price)}`}
+                    className={clsx(
+                      "grid h-9 w-9 place-items-center rounded-full ring-1 ring-inset ring-black/30 transition-transform",
+                      build.ribbon === r.id
+                        ? "scale-110 outline outline-2 outline-offset-2 outline-brass"
+                        : "hover:scale-105",
+                    )}
+                    style={{ backgroundColor: r.hex }}
+                  >
+                    <span className="sr-only">
+                      {r.name}, {formatPeso(r.price)}
+                    </span>
+                  </button>
+                </li>
               ))}
-            </select>
-          </label>
+            </ul>
+            <p className="text-2xs text-faint">
+              {ribbonById(build.ribbon).name} ·{" "}
+              {formatPeso(ribbonById(build.ribbon).price)}
+            </p>
+          </div>
 
           <label className="flex flex-col gap-1.5 text-xs text-muted">
             Name it (optional)

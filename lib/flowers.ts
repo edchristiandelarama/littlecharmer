@@ -75,12 +75,11 @@ export function shape(id: FlowerShapeId): FlowerShape {
  * WRAPS & RIBBONS — the finishing options in the builder's third step.
  * ------------------------------------------------------------------------- */
 
+/** Wrapping paper. Chosen by colour rather than by type. */
 export interface Wrap {
   id: string;
   name: string;
-  blurb: string;
   price: number;
-  /** Paper colour, for the 3D preview. */
   hex: string;
 }
 

@@ -71,7 +71,7 @@ export const contentSchema = z.object({
   about: z.object({
     kicker: text(60),
     headline: required("About headline", 120),
-    photo: text(200),
+    photos: z.array(text(300)).max(3, "Up to three photos").optional(),
     photoCaption: text(160),
     body: z.array(text(1200)).max(8),
   }),
@@ -170,7 +170,10 @@ export const productsSchema = z.object({
         ribbon: z.string().trim().max(40),
         blurb: text(400),
         story: text(1600).optional(),
-        photo: text(300).optional(),
+        photos: z
+          .array(text(300))
+          .max(5, "Up to five photos per piece")
+          .optional(),
         featured: z.boolean().optional(),
         bestseller: z.boolean().optional(),
       }),
@@ -241,7 +244,6 @@ export const materialsSchema = z.object({
         id: slug("Colour id"),
         name: required("Colour name", 40),
         hex: hex("Colour"),
-        family: z.enum(["pink", "warm", "green", "cool", "neutral"]),
         metallic: z.boolean().optional(),
         inStock: z.boolean().optional(),
       }),
@@ -283,13 +285,12 @@ export const materialsSchema = z.object({
       z.object({
         id: slug("Wrap id"),
         name: required("Wrap name", 40),
-        blurb: text(200),
         price: z.number().int().min(0).max(100_000),
         hex: hex("Wrap colour"),
       }),
     )
     .min(1)
-    .max(20)
+    .max(5, "Five wrap colours is the maximum")
     .superRefine(uniqueIds("wraps")),
 
   ribbons: z
@@ -302,7 +303,7 @@ export const materialsSchema = z.object({
       }),
     )
     .min(1)
-    .max(20)
+    .max(8)
     .superRefine(uniqueIds("ribbons")),
 });
 

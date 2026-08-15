@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
+import PhotoSlideshow from "@/components/ui/PhotoSlideshow";
 import BouquetSvg from "@/components/bouquet/BouquetSvg";
 import ProductCard from "@/components/shop/ProductCard";
 import Reveal from "@/components/ui/Reveal";
@@ -10,6 +10,7 @@ import {
   occasions,
   productBySlug,
   productColours,
+  productPhotos,
   products,
   stemCount,
 } from "@/lib/products";
@@ -50,6 +51,7 @@ export default async function ProductPage({
   const wrap = wrapById(product.wrap);
   const ribbon = ribbonById(product.ribbon);
   const colours = productColours(product);
+  const photos = productPhotos(product);
 
   const asBuild = encodeBuild({
     stems: product.stems.map((s) => ({ shape: s.shape, colour: s.colour, qty: s.qty })),
@@ -89,14 +91,16 @@ export default async function ProductPage({
               background: `radial-gradient(72% 58% at 50% 34%, ${wire(colours[0]).hex}30, transparent 70%)`,
             }}
           />
-          {product.photo ? (
-            <Image
-              src={product.photo}
+          {photos.length > 0 ? (
+            <PhotoSlideshow
+              photos={photos}
               alt={product.name}
-              fill
-              priority
+              mode="auto"
+              interval={3200}
               sizes="(min-width: 1024px) 46vw, 92vw"
-              className="object-cover"
+              priority
+              showDots
+              className="absolute inset-0"
             />
           ) : (
             <div className="grid h-full place-items-center p-10">

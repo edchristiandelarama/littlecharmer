@@ -19,26 +19,15 @@
 
 import materials from "@/content/materials.json";
 
-export type WireFamily = "pink" | "warm" | "green" | "cool" | "neutral";
-
 export interface WireColour {
   id: string;
   name: string;
   hex: string;
-  family: WireFamily;
   metallic?: boolean;
   /** Set false when you run out. It stays visible but is marked unavailable,
    *  which answers the question before anyone has to ask it. */
   inStock?: boolean;
 }
-
-export const wireFamilies: { id: WireFamily; label: string }[] = [
-  { id: "pink", label: "Pinks & Reds" },
-  { id: "warm", label: "Warm & Sunny" },
-  { id: "green", label: "Greens" },
-  { id: "cool", label: "Blues & Purples" },
-  { id: "neutral", label: "Neutrals & Metallics" },
-];
 
 export const wireColours = materials.wireColours as WireColour[];
 
@@ -52,10 +41,6 @@ export function wire(id: string): WireColour {
 
 export function wireHex(id: string): string {
   return wire(id).hex;
-}
-
-export function wiresInFamily(family: WireFamily): WireColour[] {
-  return wireColours.filter((c) => c.family === family);
 }
 
 export function isInStock(c: WireColour): boolean {

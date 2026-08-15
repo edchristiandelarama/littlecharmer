@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import PhotoField from "./PhotoField";
+import PhotoList from "./PhotoList";
 import type { ProductsContent } from "@/lib/content-schema";
 import { occasions, productKinds, formatPeso } from "@/lib/products";
 import { flowerShapes, ribbons, wraps } from "@/lib/flowers";
@@ -68,7 +68,7 @@ export default function ProductsTab({
       ribbon: "gold",
       blurb: "",
       story: "",
-      photo: "",
+      photos: [],
       featured: false,
       bestseller: false,
     };
@@ -113,10 +113,10 @@ export default function ProductsTab({
                   className="flex min-w-0 flex-1 items-center gap-3 text-left"
                 >
                   <span className="grid h-10 w-9 shrink-0 place-items-center overflow-hidden rounded border border-line-firm bg-ink text-2xs text-faint">
-                    {p.photo ? (
+                    {p.photos?.[0] ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
-                        src={p.photo}
+                        src={p.photos[0]}
                         alt=""
                         className="h-full w-full object-cover"
                       />
@@ -184,11 +184,15 @@ export default function ProductsTab({
               {open ? (
                 <div className="flex flex-col gap-5 border-t border-line px-4 pb-5 pt-4">
                   <div>
-                    <h4 className="eyebrow mb-2">Photo</h4>
-                    <PhotoField
-                      value={p.photo ?? ""}
-                      productName={p.name}
-                      onChange={(photo) => update(i, { photo })}
+                    <h4 className="eyebrow mb-1">Photos</h4>
+                    <p className="mb-3 text-2xs text-faint">
+                      Up to five. The first is the cover; the rest fade past it
+                      when a customer hovers over the piece in the shop.
+                    </p>
+                    <PhotoList
+                      photos={p.photos ?? []}
+                      name={p.name || p.slug}
+                      onChange={(photos) => update(i, { photos })}
                     />
                   </div>
 

@@ -1,10 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useRef, useState } from "react";
 import BouquetSvg from "@/components/bouquet/BouquetSvg";
-import { formatPeso, productColours, stemCount, type Product } from "@/lib/products";
+import PhotoSlideshow from "@/components/ui/PhotoSlideshow";
+import {
+  formatPeso,
+  productColours,
+  productPhotos,
+  stemCount,
+  type Product,
+} from "@/lib/products";
 import { ribbonById, wrapById } from "@/lib/flowers";
 import { wire } from "@/lib/wire-colours";
 import clsx from "@/lib/clsx";
@@ -34,6 +40,7 @@ export default function ProductCard({
   const [hovered, setHovered] = useState(false);
 
   const colours = productColours(product);
+  const photos = productPhotos(product);
   const wrap = wrapById(product.wrap);
   const ribbon = ribbonById(product.ribbon);
 
@@ -83,14 +90,18 @@ export default function ProductCard({
           }}
         />
 
-        {product.photo ? (
-          <Image
-            src={product.photo}
+        {photos.length > 0 ? (
+          <PhotoSlideshow
+            photos={photos}
             alt={product.name}
-            fill
+            mode="hover"
+            active={hovered}
+            interval={1600}
             sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
             priority={priority}
-            className="object-cover transition-transform duration-700 ease-[var(--ease-out-soft)] group-hover:scale-[1.045]"
+            showDots
+            className="absolute inset-0"
+            imageClassName="transition-transform duration-700 ease-[var(--ease-out-soft)] group-hover:scale-[1.045]"
           />
         ) : (
           <div className="absolute inset-0 grid place-items-center p-6">

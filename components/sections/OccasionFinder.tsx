@@ -5,7 +5,7 @@ import Link from "next/link";
 import ProductCard from "@/components/shop/ProductCard";
 import SectionHead from "@/components/ui/SectionHead";
 import { occasions, priceBands, products, productColours, type OccasionId } from "@/lib/products";
-import { wire, wireFamilies, type WireFamily } from "@/lib/wire-colours";
+import { nearestWires, wire, wireColours } from "@/lib/wire-colours";
 import clsx from "@/lib/clsx";
 
 /* ===========================================================================
@@ -18,19 +18,11 @@ import clsx from "@/lib/clsx";
 
 type Step = 0 | 1 | 2 | 3;
 
-const familySwatch: Record<WireFamily, string> = {
-  pink: "#e23e57",
-  warm: "#f5a623",
-  green: "#4e8b4a",
-  cool: "#3d6fd4",
-  neutral: "#c9a227",
-};
-
 export default function OccasionFinder() {
   const [step, setStep] = useState<Step>(0);
   const [occasion, setOccasion] = useState<OccasionId | null>(null);
   const [budget, setBudget] = useState<string | null>(null);
-  const [colour, setColour] = useState<WireFamily | null>(null);
+  const [colour, setColour] = useState<string | null>(null);
 
   const results = useMemo(() => {
     if (step < 3) return [];
@@ -44,9 +36,17 @@ export default function OccasionFinder() {
         if (occasion && p.occasions.includes(occasion)) score += 5;
         if (band && p.price >= band.min && p.price <= band.max) score += 3;
         else if (band && p.price <= band.max * 1.25) score += 1;
+        // Exact colour, then anything close to it — a piece in Cherry is a
+        // fair answer to someone who asked for Ruby.
         if (colour) {
-          const families = new Set(productColours(p).map((id) => wire(id).family));
-          if (families.has(colour)) score += 3;
+          const used = productColours(p);
+          if (used.includes(colour)) score += 3;
+          else {
+            const near = new Set(
+              nearestWires(wire(colour).hex, 5).map((m) => m.colour.id),
+            );
+            if (used.some((id) => near.has(id))) score += 1;
+          }
         }
         if (p.bestseller) score += 1;
         return { p, score };
@@ -89,11 +89,11 @@ export default function OccasionFinder() {
     {
       title: "Any colour in mind?",
       options: [
-        ...wireFamilies.map((f) => ({ id: f.id, label: f.label, hint: undefined })),
+        ...wireColours.map((c) => ({ id: c.id, label: c.name, hint: undefined })),
         { id: "any", label: "Surprise me", hint: undefined },
       ],
       onPick: (id: string) => {
-        setColour(id === "any" ? null : (id as WireFamily));
+        setColour(id === "any" ? null : id);
         setStep(3);
       },
     },
@@ -152,7 +152,7 @@ export default function OccasionFinder() {
                         <span
                           aria-hidden
                           className="h-3 w-3 rounded-full ring-1 ring-inset ring-black/30"
-                          style={{ backgroundColor: familySwatch[o.id as WireFamily] }}
+                          style={{ backgroundColor: wire(o.id).hex }}
                         />
                       ) : null}
                       {o.label}

@@ -13,7 +13,10 @@ import { wireColours } from "@/lib/wire-colours";
  */
 export default function BuilderTeaser() {
   const bloomShapes = flowerShapes.filter((f) => f.id !== "leaf");
-  const swatches = wireColours.filter((c) => c.family !== "green").slice(0, 14);
+  // A spread across the shelf rather than the first fourteen, so the teaser
+  // shows the range instead of one corner of it.
+  const step = Math.max(1, Math.floor(wireColours.length / 14));
+  const swatches = wireColours.filter((_, i) => i % step === 0).slice(0, 14);
 
   return (
     <section

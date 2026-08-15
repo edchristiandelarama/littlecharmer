@@ -71,8 +71,11 @@ export interface Product {
   blurb: string;
   /** A longer paragraph for the product page. Optional. */
   story?: string;
-  /** "/photos/name.jpg" — leave "" to use the generated panel. */
-  photo?: string;
+  /**
+   * Up to five photographs. Empty means the piece draws its own bouquet from
+   * the stem list instead, so the shop looks finished before anything is shot.
+   */
+  photos?: string[];
   featured?: boolean;
   bestseller?: boolean;
 }
@@ -127,4 +130,9 @@ export const priceBands = [
 
 export function formatPeso(n: number): string {
   return `₱${n.toLocaleString("en-PH")}`;
+}
+
+/** The photos actually worth showing — blanks filtered out. */
+export function productPhotos(p: Product): string[] {
+  return (p.photos ?? []).filter((x) => x && x.trim().length > 0);
 }

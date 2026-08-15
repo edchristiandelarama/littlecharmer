@@ -2,9 +2,14 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import PhotoSlideshow from "@/components/ui/PhotoSlideshow";
 import BouquetSvg from "@/components/bouquet/BouquetSvg";
-import { formatPeso, stemCount, type Product } from "@/lib/products";
+import {
+  formatPeso,
+  productPhotos,
+  stemCount,
+  type Product,
+} from "@/lib/products";
 import { ribbonById, shape, wrapById } from "@/lib/flowers";
 import { wire } from "@/lib/wire-colours";
 import { encodeBuild } from "@/lib/build-encode";
@@ -65,6 +70,7 @@ export default function QuickView({
 
   if (!product) return null;
 
+  const photos = productPhotos(product);
   const wrap = wrapById(product.wrap);
   const ribbon = ribbonById(product.ribbon);
 
@@ -110,13 +116,15 @@ export default function QuickView({
         <div className="grid gap-0 sm:grid-cols-[0.95fr_1.05fr]">
           {/* picture */}
           <div className="relative aspect-square overflow-hidden rounded-t-2xl bg-surface sm:aspect-auto sm:rounded-l-2xl sm:rounded-tr-none">
-            {product.photo ? (
-              <Image
-                src={product.photo}
+            {photos.length > 0 ? (
+              <PhotoSlideshow
+                photos={photos}
                 alt={product.name}
-                fill
+                mode="auto"
+                interval={2600}
                 sizes="(min-width: 640px) 45vw, 100vw"
-                className="object-cover"
+                showDots
+                className="absolute inset-0"
               />
             ) : (
               <div className="grid h-full place-items-center p-8">

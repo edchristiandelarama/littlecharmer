@@ -3,7 +3,7 @@
 import { create } from "zustand";
 import type { FlowerShapeId } from "./flowers";
 import { flowerShapes, ribbons, wraps } from "./flowers";
-import { wireColours } from "./wire-colours";
+import { nearestWires, wireColours } from "./wire-colours";
 import {
   MAX_STEMS,
   MAX_STEM_GROUPS,
@@ -139,10 +139,17 @@ export const useBuilder = create<BuilderState>((set) => ({
       };
       const pick = <T,>(arr: T[]): T => arr[Math.floor(rand() * arr.length)];
 
-      // One family for the blooms keeps the result tasteful rather than random.
-      const palette = wireColours.filter((c) => c.family !== "green");
+      /*
+       * Pick one lead colour, then choose companions that sit near it in hue.
+       * Picking at random from the whole shelf gives a clashing bouquet; this
+       * is what makes "surprise me" produce something you'd actually send.
+       */
+      const greens = new Set(["mint", "sage", "fern", "forest", "olive"]);
+      const palette = wireColours.filter((c) => !greens.has(c.id));
       const lead = pick(palette);
-      const near = palette.filter((c) => c.family === lead.family);
+      const near = nearestWires(lead.hex, 6)
+        .map((m) => m.colour)
+        .filter((c) => !greens.has(c.id));
 
       const blooms = flowerShapes.filter((f) => f.id !== "leaf");
       let build: BouquetBuild = {

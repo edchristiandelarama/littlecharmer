@@ -1,4 +1,4 @@
-import Image from "next/image";
+import PhotoSlideshow from "@/components/ui/PhotoSlideshow";
 import Reveal from "@/components/ui/Reveal";
 import SectionHead from "@/components/ui/SectionHead";
 import BouquetSvg from "@/components/bouquet/BouquetSvg";
@@ -14,13 +14,15 @@ export default function About() {
       <div className="container-page grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center lg:gap-16">
         {/* picture */}
         <Reveal className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-line bg-surface">
-          {about.photo ? (
-            <Image
-              src={about.photo}
+          {about.photos.length > 0 ? (
+            <PhotoSlideshow
+              photos={about.photos}
               alt={about.photoCaption}
-              fill
+              mode="auto"
+              interval={4000}
               sizes="(min-width: 1024px) 42vw, 92vw"
-              className="object-cover"
+              showDots
+              className="absolute inset-0"
             />
           ) : (
             <>

@@ -127,7 +127,17 @@ export const fulfilment = {
 
 /* --- page content --------------------------------------------------------- */
 
-export const about = content.about;
+export const about = {
+  ...content.about,
+  /*
+   * Blanks filtered out, so an empty upload slot never renders a broken image.
+   * Cast because an empty array in JSON infers as never[], which would make
+   * every element unusable the moment the shop has no About photos yet.
+   */
+  photos: ((content.about.photos ?? []) as string[]).filter(
+    (p) => p.trim().length > 0,
+  ),
+};
 export const craftSteps = content.craftSteps as CraftStep[];
 export const promises = content.promises as Promise_[];
 export const faqs = content.faqs as Faq[];
