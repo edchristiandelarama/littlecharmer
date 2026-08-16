@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useBuilder } from "@/lib/builder-store";
@@ -139,7 +140,31 @@ export default function Builder() {
               </button>
             ))}
           </div>
-          <p className="text-xs text-muted">{shapeDef(activeShape).blurb}</p>
+          {/*
+            A photograph of the real flower, once the shop has uploaded one.
+            The 3D stage shows what the bouquet will look like; this shows what
+            the actual thing looks like in the hand, which is what reassures
+            someone choosing between shapes.
+          */}
+          {shapeDef(activeShape).photo ? (
+            <figure className="flex flex-col gap-1.5">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-lg border border-line bg-surface">
+                <Image
+                  key={shapeDef(activeShape).photo}
+                  src={shapeDef(activeShape).photo as string}
+                  alt={`A real ${shapeDef(activeShape).name.toLowerCase()} we made`}
+                  fill
+                  sizes="(min-width: 1024px) 22vw, 90vw"
+                  className="animate-[fade-up_0.5s_var(--ease-out-soft)] object-cover"
+                />
+              </div>
+              <figcaption className="text-xs text-muted">
+                {shapeDef(activeShape).blurb}
+              </figcaption>
+            </figure>
+          ) : (
+            <p className="text-xs text-muted">{shapeDef(activeShape).blurb}</p>
+          )}
         </div>
 
         <div className="flex flex-col gap-3 border-t border-line pt-5">
@@ -160,8 +185,7 @@ export default function Builder() {
           />
 
           <p className="text-xs text-muted">
-            {wire(activeColour).name}
-            {wire(activeColour).metallic ? " · metallic" : ""} ·{" "}
+            {wire(activeColour).name} ·{" "}
             <Link href="/colour-matcher" className="text-brass hover:underline">
               match a photo instead
             </Link>

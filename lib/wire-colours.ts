@@ -12,9 +12,6 @@
  *
  * Easiest way to do this properly: photograph your wire stock in daylight, open
  * the photo in any image editor, and use the eyedropper on each colour.
- *
- * `metallic: true` gives the 3D flower a tinsel-like glint instead of a matte
- * fuzz — use it only for wires that genuinely sparkle.
  * =========================================================================== */
 
 import materials from "@/content/materials.json";
@@ -23,7 +20,6 @@ export interface WireColour {
   id: string;
   name: string;
   hex: string;
-  metallic?: boolean;
   /** Set false when you run out. It stays visible but is marked unavailable,
    *  which answers the question before anyone has to ask it. */
   inStock?: boolean;

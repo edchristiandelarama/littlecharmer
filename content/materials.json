@@ -5,189 +5,162 @@
       "id": "ruby",
       "name": "Ruby",
       "hex": "#c8102e",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "cherry",
       "name": "Cherry",
       "hex": "#e23e57",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "coral",
       "name": "Coral",
       "hex": "#ff7f6b",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "bubblegum",
       "name": "Bubblegum",
       "hex": "#ff8fb1",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "blush",
       "name": "Blush",
       "hex": "#f5a9c0",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "dusty-rose",
       "name": "Dusty Rose",
       "hex": "#c97b8e",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "wine",
       "name": "Wine",
       "hex": "#7d2338",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "tangerine",
       "name": "Tangerine",
       "hex": "#f2762e",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "marigold",
       "name": "Marigold",
       "hex": "#f5a623",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "sunbeam",
       "name": "Sunbeam",
       "hex": "#f7d34e",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "butter",
       "name": "Butter",
       "hex": "#f7e08a",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "peach",
       "name": "Peach",
       "hex": "#f7b58a",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "maroon",
       "name": "Maroon",
       "hex": "#6b2020",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "mint",
       "name": "Mint",
       "hex": "#7bc47f",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "sage",
       "name": "Sage",
       "hex": "#9cb39a",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "fern",
       "name": "Fern",
       "hex": "#4e8b4a",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "forest",
       "name": "Forest",
       "hex": "#2f5d3a",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "olive",
       "name": "Olive",
       "hex": "#8a8f4a",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "powder",
       "name": "Powder Blue",
       "hex": "#a9c9e8",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "cobalt",
       "name": "Cobalt",
       "hex": "#3d6fd4",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "navy",
       "name": "Navy",
       "hex": "#23345e",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "teal",
       "name": "Teal",
       "hex": "#2f8f8f",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "lilac",
       "name": "Lilac",
       "hex": "#c4a6e0",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "violet",
       "name": "Violet",
       "hex": "#7a4fb0",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "plum",
       "name": "Plum",
       "hex": "#5b2a4e",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "ivory",
       "name": "Ivory",
       "hex": "#f3f0e6",
-      "metallic": false,
       "inStock": true
     },
     {
       "id": "gold",
       "name": "Gold",
       "hex": "#c9a227",
-      "metallic": true,
       "inStock": true
     }
   ],
@@ -210,7 +183,8 @@
         "centre": 0.06,
         "centreColour": "",
         "stemLength": 2.5
-      }
+      },
+      "photo": ""
     },
     {
       "id": "tulip",
@@ -230,7 +204,8 @@
         "centre": 0.05,
         "centreColour": "",
         "stemLength": 2.6
-      }
+      },
+      "photo": ""
     },
     {
       "id": "daisy",
@@ -250,7 +225,8 @@
         "centre": 0.17,
         "centreColour": "sunbeam",
         "stemLength": 2.35
-      }
+      },
+      "photo": ""
     },
     {
       "id": "sunflower",
@@ -270,7 +246,8 @@
         "centre": 0.27,
         "centreColour": "onyx",
         "stemLength": 2.65
-      }
+      },
+      "photo": ""
     },
     {
       "id": "lily",
@@ -290,7 +267,8 @@
         "centre": 0.08,
         "centreColour": "marigold",
         "stemLength": 2.55
-      }
+      },
+      "photo": ""
     },
     {
       "id": "bud",
@@ -310,7 +288,8 @@
         "centre": 0.03,
         "centreColour": "",
         "stemLength": 2.1
-      }
+      },
+      "photo": ""
     },
     {
       "id": "gerbera",
@@ -330,7 +309,8 @@
         "centre": 0.22,
         "centreColour": "onyx",
         "stemLength": 2.8
-      }
+      },
+      "photo": ""
     },
     {
       "id": "cherry-blossom",
@@ -350,7 +330,8 @@
         "centre": 0.06,
         "centreColour": "sunbeam",
         "stemLength": 2.1
-      }
+      },
+      "photo": ""
     },
     {
       "id": "peony",
@@ -370,7 +351,8 @@
         "centre": 0.05,
         "centreColour": "",
         "stemLength": 2.55
-      }
+      },
+      "photo": ""
     },
     {
       "id": "carnation",
@@ -390,7 +372,8 @@
         "centre": 0.04,
         "centreColour": "",
         "stemLength": 2.45
-      }
+      },
+      "photo": ""
     },
     {
       "id": "chrysanthemum",
@@ -410,7 +393,8 @@
         "centre": 0.07,
         "centreColour": "",
         "stemLength": 2.5
-      }
+      },
+      "photo": ""
     },
     {
       "id": "leaf",
@@ -431,7 +415,8 @@
         "centre": 0,
         "centreColour": "",
         "stemLength": 2.2
-      }
+      },
+      "photo": ""
     },
     {
       "id": "eucalyptus",
@@ -452,7 +437,8 @@
         "centre": 0,
         "centreColour": "",
         "stemLength": 2.5
-      }
+      },
+      "photo": ""
     },
     {
       "id": "fern-frond",
@@ -473,7 +459,8 @@
         "centre": 0,
         "centreColour": "",
         "stemLength": 2.7
-      }
+      },
+      "photo": ""
     },
     {
       "id": "olive-sprig",
@@ -494,7 +481,8 @@
         "centre": 0,
         "centreColour": "",
         "stemLength": 2.6
-      }
+      },
+      "photo": ""
     }
   ],
   "wraps": [

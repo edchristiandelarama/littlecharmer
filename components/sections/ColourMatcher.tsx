@@ -212,11 +212,6 @@ export default function ColourMatcher() {
                 <div className="flex items-baseline justify-between gap-3">
                   <p className="font-display text-lg">
                     {m.colour.name}
-                    {m.colour.metallic ? (
-                      <span className="ml-2 text-2xs uppercase tracking-widest text-brass">
-                        metallic
-                      </span>
-                    ) : null}
                   </p>
                   <p className="shrink-0 text-sm text-brass tabular-nums">
                     {m.closeness}% match

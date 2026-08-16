@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import PhotoSlideshow from "@/components/ui/PhotoSlideshow";
+import PhotoGallery from "@/components/shop/PhotoGallery";
 import BouquetSvg from "@/components/bouquet/BouquetSvg";
 import ProductCard from "@/components/shop/ProductCard";
 import Reveal from "@/components/ui/Reveal";
@@ -82,39 +82,32 @@ export default async function ProductPage({
       </nav>
 
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
-        {/* picture */}
-        <div className="relative aspect-[4/5] overflow-hidden rounded-xl border border-line bg-surface lg:sticky lg:top-24 lg:self-start">
-          <div
-            aria-hidden
-            className="absolute inset-0"
-            style={{
-              background: `radial-gradient(72% 58% at 50% 34%, ${wire(colours[0]).hex}30, transparent 70%)`,
-            }}
-          />
+        {/* picture — browsed by the customer, not on a timer */}
+        <div className="lg:sticky lg:top-24 lg:self-start">
           {photos.length > 0 ? (
-            <PhotoSlideshow
-              photos={photos}
-              alt={product.name}
-              mode="auto"
-              interval={3200}
-              sizes="(min-width: 1024px) 46vw, 92vw"
-              priority
-              showDots
-              className="h-full w-full"
-            />
+            <PhotoGallery photos={photos} alt={product.name} />
           ) : (
-            <div className="grid h-full place-items-center p-10">
-              <BouquetSvg
-                stems={product.stems}
-                wrapHex={wrap.hex}
-                ribbonHex={ribbon.hex}
-                showWrap={product.kind !== "stem"}
-                title={`${product.name}, drawn from its stem list`}
-                className="h-full w-auto"
+            <div className="relative aspect-[4/5] overflow-hidden rounded-xl border border-line bg-surface">
+              <div
+                aria-hidden
+                className="absolute inset-0"
+                style={{
+                  background: `radial-gradient(72% 58% at 50% 34%, ${wire(colours[0]).hex}30, transparent 70%)`,
+                }}
               />
-              <p className="absolute bottom-4 text-2xs uppercase tracking-widest text-faint">
-                Illustrated · photograph coming
-              </p>
+              <div className="grid h-full place-items-center p-10">
+                <BouquetSvg
+                  stems={product.stems}
+                  wrapHex={wrap.hex}
+                  ribbonHex={ribbon.hex}
+                  showWrap={product.kind !== "stem"}
+                  title={`${product.name}, drawn from its stem list`}
+                  className="h-full w-auto"
+                />
+                <p className="absolute bottom-4 text-2xs uppercase tracking-widest text-faint">
+                  Illustrated · photograph coming
+                </p>
+              </div>
             </div>
           )}
         </div>

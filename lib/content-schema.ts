@@ -244,7 +244,6 @@ export const materialsSchema = z.object({
         id: slug("Colour id"),
         name: required("Colour name", 40),
         hex: hex("Colour"),
-        metallic: z.boolean().optional(),
         inStock: z.boolean().optional(),
       }),
     )
@@ -262,6 +261,8 @@ export const materialsSchema = z.object({
         effort: text(80),
         defaultColour: z.string().trim().max(40),
         foliage: z.boolean().optional(),
+        /** A photograph of the real thing, shown in the builder. */
+        photo: text(300).optional(),
         geometry: z.object({
           petals: z.number().int().min(1).max(48),
           layers: z.number().int().min(1).max(6),

@@ -6,6 +6,7 @@ import type { MaterialsContent, ProductsContent } from "@/lib/content-schema";
 import type { FlowerShape } from "@/lib/flowers";
 import { formatPeso } from "@/lib/products";
 import { wire } from "@/lib/wire-colours";
+import PhotoField from "./PhotoField";
 import clsx from "@/lib/clsx";
 
 const FlowerPreview = dynamic(() => import("./FlowerPreview"), {
@@ -125,6 +126,7 @@ export default function FlowersTab({
         effort: "about 15 minutes each",
         defaultColour: colours[0]?.id ?? "blush",
         foliage: false,
+        photo: "",
         geometry: {
           petals: 8,
           layers: 2,
@@ -316,6 +318,22 @@ export default function FlowersTab({
                         </span>
                       </span>
                     </label>
+
+                    {/* A photo of the real thing, shown in the builder next to
+                        the 3D — one says what the bouquet will look like, the
+                        other says what it looks like in the hand. */}
+                    <div className="flex flex-col gap-1.5 border-t border-line pt-4">
+                      <h4 className="eyebrow">Photo of the real flower</h4>
+                      <p className="mb-1 text-2xs text-faint">
+                        Shown in the builder when a customer picks this shape.
+                        One stem on a plain background works best.
+                      </p>
+                      <PhotoField
+                        value={s.photo ?? ""}
+                        productName={`flower-${s.id}`}
+                        onChange={(photo) => update(i, { photo })}
+                      />
+                    </div>
 
                     {/* geometry */}
                     <div className="flex flex-col gap-4 border-t border-line pt-4">

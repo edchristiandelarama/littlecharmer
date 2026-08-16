@@ -48,8 +48,8 @@ export default function Flower({
   const hex = wireColour.hex;
 
   const petalMat = useMemo(
-    () => chenilleMaterial(hex, { metallic: wireColour.metallic, detail: quality === "high" }),
-    [hex, wireColour.metallic, quality],
+    () => chenilleMaterial(hex, { detail: quality === "high" }),
+    [hex, quality],
   );
 
   const stemMat = useMemo(

@@ -36,12 +36,10 @@ function slugify(name: string): string {
 /** A round swatch that opens the colour picker when clicked. */
 function Swatch({
   hex,
-  metallic,
   label,
   onChange,
 }: {
   hex: string;
-  metallic?: boolean;
   label: string;
   onChange: (hex: string) => void;
 }) {
@@ -52,12 +50,6 @@ function Swatch({
       title="Click to pick a colour"
     >
       <span className="sr-only">{label}</span>
-      {metallic ? (
-        <span
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-transparent via-white/55 to-transparent"
-        />
-      ) : null}
       <input
         type="color"
         value={hex}
@@ -120,7 +112,6 @@ export default function ColoursTab({
         id: `new-colour-${n}`,
         name: `New colour ${n}`,
         hex: "#cccccc",
-        metallic: false,
         inStock: true,
       },
     ]);
@@ -173,7 +164,6 @@ export default function ColoursTab({
               >
                 <Swatch
                   hex={c.hex}
-                  metallic={c.metallic}
                   label={`Colour for ${c.name}`}
                   onChange={(hex) => update(i, { hex })}
                 />
@@ -200,16 +190,6 @@ export default function ColoursTab({
                     update(i, { hex: v.slice(0, 7) });
                   }}
                 />
-
-                <label className="flex items-center gap-1.5 text-xs text-cream-2">
-                  <input
-                    type="checkbox"
-                    className="h-4 w-4 accent-brass"
-                    checked={Boolean(c.metallic)}
-                    onChange={(e) => update(i, { metallic: e.target.checked })}
-                  />
-                  Metallic
-                </label>
 
                 <label className="flex items-center gap-1.5 text-xs text-cream-2">
                   <input

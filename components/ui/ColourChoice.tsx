@@ -49,12 +49,6 @@ export function ColourSwatch({
         {colour.name}
         {available ? "" : " (out of stock)"}
       </span>
-      {colour.metallic ? (
-        <span
-          aria-hidden
-          className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/55 to-transparent"
-        />
-      ) : null}
     </button>
   );
 }
@@ -93,7 +87,6 @@ export default function ColourChoice({
       {label !== false ? (
         <p className="text-xs text-muted">
           <span className="text-cream-2">{selected.name}</span>
-          {selected.metallic ? " · metallic" : ""}
         </p>
       ) : null}
     </div>

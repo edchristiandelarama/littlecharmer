@@ -39,6 +39,8 @@ export interface FlowerShape {
    * bouquet; blooms are mixed through the middle. Without this flag every new
    * leaf variant would clump into the centre.
    */
+  /** A photograph of the real flower, shown when this shape is selected. */
+  photo?: string;
   foliage?: boolean;
   geometry: {
     /** Number of petal loops. */
