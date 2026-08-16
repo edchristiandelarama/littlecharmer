@@ -208,7 +208,7 @@ export async function commitBinary(
       ok: true,
       via: "github",
       message:
-        "Photo uploaded. It appears on the live site once the redeploy finishes, a minute or two from now.",
+        "Photo uploaded. Press Save to put it on the live site — the site rebuilds once, after you save, however many photos you added.",
     };
   } catch (error) {
     return {

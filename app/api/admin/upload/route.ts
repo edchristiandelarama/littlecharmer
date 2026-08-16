@@ -86,10 +86,14 @@ export async function POST(request: Request) {
     }
   }
 
+  // [skip ci] keeps Netlify from rebuilding for the upload itself. A photo
+  // nothing points at changes no page, and hosts meter builds — uploading five
+  // photos then saving should cost one deploy, not six. The save that attaches
+  // the photo carries no skip token, so the picture goes live with it.
   const result = await commitBinary(
     `public/photos/${filename}`,
     buffer,
-    `Add product photo ${filename}`,
+    `Add product photo ${filename} [skip ci]`,
   );
 
   return NextResponse.json(
