@@ -29,3 +29,7 @@ next-env.d.ts
 # editor
 .vscode/
 .idea/
+
+# Screenshots from automated browser checks. Working files, not site content —
+# the photos the site actually uses live in public/photos/.
+/shots/
