@@ -8,7 +8,7 @@ import {
   MAX_STEMS,
   MAX_STEM_GROUPS,
   buildStemCount,
-  starterBuild,
+  emptyBuild,
   type BouquetBuild,
 } from "./build-encode";
 
@@ -34,7 +34,7 @@ interface BuilderState {
   setQty: (index: number, qty: number) => void;
   removeGroup: (index: number) => void;
   recolour: (index: number, colour: string) => void;
-  setWrap: (id: string) => void;
+  toggleWrap: (id: string) => void;
   setRibbon: (id: string) => void;
   setName: (name: string) => void;
   load: (build: BouquetBuild) => void;
@@ -67,7 +67,7 @@ function addStem(
 }
 
 export const useBuilder = create<BuilderState>((set) => ({
-  build: starterBuild,
+  build: emptyBuild,
   activeShape: "rose",
   activeColour: "ruby",
   hydrated: false,
@@ -121,12 +121,41 @@ export const useBuilder = create<BuilderState>((set) => ({
       },
     })),
 
-  setWrap: (id) => set((s) => ({ build: { ...s.build, wrap: id } })),
+  /*
+   * Wrap is a preference list, not one answer. Tapping a swatch adds it,
+   * tapping it again takes it away, and the first one still standing is what
+   * the 3D renders and what the estimate is priced on.
+   *
+   * "No wrap" can't sit alongside a colour preference — asking for bare stems
+   * *or* plum paper isn't a preference, it's two different orders — so picking
+   * it clears the rest, and picking a colour clears it.
+   */
+  toggleWrap: (id) =>
+    set((s) => {
+      const current = [s.build.wrap, ...(s.build.wrapAlts ?? [])];
+
+      if (id === "none") return { build: { ...s.build, wrap: "none", wrapAlts: [] } };
+
+      const next = current.includes(id)
+        ? current.filter((w) => w !== id)
+        : [...current.filter((w) => w !== "none"), id];
+
+      // Never leave nothing selected — the last swatch can't be turned off.
+      if (next.length === 0) return s;
+
+      return { build: { ...s.build, wrap: next[0], wrapAlts: next.slice(1) } };
+    }),
   setRibbon: (id) => set((s) => ({ build: { ...s.build, ribbon: id } })),
   setName: (name) => set((s) => ({ build: { ...s.build, name } })),
 
   load: (build) => set({ build, hydrated: true }),
-  reset: () => set({ build: { ...starterBuild }, hydrated: true }),
+  reset: () =>
+    set({
+      build: { ...emptyBuild },
+      activeShape: flowerShapes[0]?.id ?? "rose",
+      activeColour: flowerShapes[0]?.defaultColour ?? "ruby",
+      hydrated: true,
+    }),
 
   surprise: (seed) =>
     set(() => {
@@ -155,6 +184,7 @@ export const useBuilder = create<BuilderState>((set) => ({
       let build: BouquetBuild = {
         stems: [],
         wrap: pick(wraps.filter((w) => w.id !== "none")).id,
+        wrapAlts: [],
         ribbon: pick(ribbons).id,
       };
 

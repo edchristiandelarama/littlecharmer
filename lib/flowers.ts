@@ -34,13 +34,13 @@ export interface FlowerShape {
   effort: string;
   /** A sensible starting colour when this shape is first added. */
   defaultColour: string;
+  /** A photograph of the real flower, shown when this shape is selected. */
+  photo?: string;
   /**
    * Greenery rather than a bloom. Foliage is arranged around the OUTSIDE of a
    * bouquet; blooms are mixed through the middle. Without this flag every new
    * leaf variant would clump into the centre.
    */
-  /** A photograph of the real flower, shown when this shape is selected. */
-  photo?: string;
   foliage?: boolean;
   geometry: {
     /** Number of petal loops. */

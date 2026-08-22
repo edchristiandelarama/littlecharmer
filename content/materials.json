@@ -172,6 +172,7 @@
       "price": 120,
       "effort": "about 25 minutes each",
       "defaultColour": "ruby",
+      "photo": "/photos/flower-rose-mt4e6tpu.jpg",
       "geometry": {
         "petals": 15,
         "layers": 3,
@@ -183,8 +184,7 @@
         "centre": 0.06,
         "centreColour": "",
         "stemLength": 2.5
-      },
-      "photo": ""
+      }
     },
     {
       "id": "tulip",
@@ -193,6 +193,7 @@
       "price": 100,
       "effort": "about 15 minutes each",
       "defaultColour": "blush",
+      "photo": "",
       "geometry": {
         "petals": 6,
         "layers": 2,
@@ -204,8 +205,7 @@
         "centre": 0.05,
         "centreColour": "",
         "stemLength": 2.6
-      },
-      "photo": ""
+      }
     },
     {
       "id": "daisy",
@@ -214,6 +214,7 @@
       "price": 70,
       "effort": "about 10 minutes each",
       "defaultColour": "ivory",
+      "photo": "",
       "geometry": {
         "petals": 12,
         "layers": 1,
@@ -225,8 +226,7 @@
         "centre": 0.17,
         "centreColour": "sunbeam",
         "stemLength": 2.35
-      },
-      "photo": ""
+      }
     },
     {
       "id": "sunflower",
@@ -235,6 +235,7 @@
       "price": 140,
       "effort": "about 30 minutes each",
       "defaultColour": "marigold",
+      "photo": "",
       "geometry": {
         "petals": 18,
         "layers": 2,
@@ -246,8 +247,7 @@
         "centre": 0.27,
         "centreColour": "onyx",
         "stemLength": 2.65
-      },
-      "photo": ""
+      }
     },
     {
       "id": "lily",
@@ -256,6 +256,7 @@
       "price": 130,
       "effort": "about 20 minutes each",
       "defaultColour": "ivory",
+      "photo": "",
       "geometry": {
         "petals": 5,
         "layers": 1,
@@ -267,8 +268,7 @@
         "centre": 0.08,
         "centreColour": "marigold",
         "stemLength": 2.55
-      },
-      "photo": ""
+      }
     },
     {
       "id": "bud",
@@ -277,6 +277,7 @@
       "price": 55,
       "effort": "about 8 minutes each",
       "defaultColour": "dusty-rose",
+      "photo": "",
       "geometry": {
         "petals": 5,
         "layers": 1,
@@ -288,8 +289,7 @@
         "centre": 0.03,
         "centreColour": "",
         "stemLength": 2.1
-      },
-      "photo": ""
+      }
     },
     {
       "id": "gerbera",
@@ -298,6 +298,7 @@
       "price": 135,
       "effort": "about 35 minutes each",
       "defaultColour": "tangerine",
+      "photo": "",
       "geometry": {
         "petals": 24,
         "layers": 2,
@@ -309,8 +310,7 @@
         "centre": 0.22,
         "centreColour": "onyx",
         "stemLength": 2.8
-      },
-      "photo": ""
+      }
     },
     {
       "id": "cherry-blossom",
@@ -319,6 +319,7 @@
       "price": 60,
       "effort": "about 8 minutes each",
       "defaultColour": "blush",
+      "photo": "",
       "geometry": {
         "petals": 5,
         "layers": 1,
@@ -330,8 +331,7 @@
         "centre": 0.06,
         "centreColour": "sunbeam",
         "stemLength": 2.1
-      },
-      "photo": ""
+      }
     },
     {
       "id": "peony",
@@ -340,6 +340,7 @@
       "price": 190,
       "effort": "about 50 minutes each",
       "defaultColour": "bubblegum",
+      "photo": "",
       "geometry": {
         "petals": 30,
         "layers": 4,
@@ -351,8 +352,7 @@
         "centre": 0.05,
         "centreColour": "",
         "stemLength": 2.55
-      },
-      "photo": ""
+      }
     },
     {
       "id": "carnation",
@@ -361,6 +361,7 @@
       "price": 115,
       "effort": "about 25 minutes each",
       "defaultColour": "cherry",
+      "photo": "",
       "geometry": {
         "petals": 26,
         "layers": 4,
@@ -372,8 +373,7 @@
         "centre": 0.04,
         "centreColour": "",
         "stemLength": 2.45
-      },
-      "photo": ""
+      }
     },
     {
       "id": "chrysanthemum",
@@ -382,6 +382,7 @@
       "price": 150,
       "effort": "about 40 minutes each",
       "defaultColour": "butter",
+      "photo": "",
       "geometry": {
         "petals": 32,
         "layers": 3,
@@ -393,8 +394,7 @@
         "centre": 0.07,
         "centreColour": "",
         "stemLength": 2.5
-      },
-      "photo": ""
+      }
     },
     {
       "id": "leaf",
@@ -404,6 +404,7 @@
       "effort": "about 5 minutes each",
       "defaultColour": "fern",
       "foliage": true,
+      "photo": "",
       "geometry": {
         "petals": 3,
         "layers": 1,
@@ -415,8 +416,7 @@
         "centre": 0,
         "centreColour": "",
         "stemLength": 2.2
-      },
-      "photo": ""
+      }
     },
     {
       "id": "eucalyptus",
@@ -426,6 +426,7 @@
       "effort": "about 10 minutes each",
       "defaultColour": "sage",
       "foliage": true,
+      "photo": "",
       "geometry": {
         "petals": 9,
         "layers": 2,
@@ -437,8 +438,7 @@
         "centre": 0,
         "centreColour": "",
         "stemLength": 2.5
-      },
-      "photo": ""
+      }
     },
     {
       "id": "fern-frond",
@@ -448,6 +448,7 @@
       "effort": "about 8 minutes each",
       "defaultColour": "forest",
       "foliage": true,
+      "photo": "",
       "geometry": {
         "petals": 14,
         "layers": 1,
@@ -459,8 +460,7 @@
         "centre": 0,
         "centreColour": "",
         "stemLength": 2.7
-      },
-      "photo": ""
+      }
     },
     {
       "id": "olive-sprig",
@@ -470,6 +470,7 @@
       "effort": "about 8 minutes each",
       "defaultColour": "olive",
       "foliage": true,
+      "photo": "",
       "geometry": {
         "petals": 10,
         "layers": 2,
@@ -481,8 +482,7 @@
         "centre": 0,
         "centreColour": "",
         "stemLength": 2.6
-      },
-      "photo": ""
+      }
     }
   ],
   "wraps": [

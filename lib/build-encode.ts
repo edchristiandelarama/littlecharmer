@@ -22,7 +22,18 @@ export interface BuildStem {
 
 export interface BouquetBuild {
   stems: BuildStem[];
+  /** The wrap shown in the preview and used for the estimate. */
   wrap: string;
+  /**
+   * Other wrap colours the customer would be equally happy with.
+   *
+   * Every bouquet is made to order from whatever is on the shelf that week, so
+   * a customer who says "blush, or ivory, or kraft — any of those" gets their
+   * bouquet made sooner than one who names a single colour and waits. The
+   * first choice is what the 3D preview renders; the rest ride along to the
+   * order email as preferences.
+   */
+  wrapAlts?: string[];
   ribbon: string;
   name?: string;
 }
@@ -30,22 +41,23 @@ export interface BouquetBuild {
 export const MAX_STEMS = 36;
 export const MAX_STEM_GROUPS = 10;
 
+/**
+ * Where the builder starts, and where "Start over" returns to.
+ *
+ * Deliberately empty. It used to open with a ready-made bouquet, which read as
+ * a demo rather than an invitation — people cleared someone else's flowers out
+ * before they could start on their own.
+ */
 export const emptyBuild: BouquetBuild = {
   stems: [],
   wrap: "kraft",
   ribbon: "gold",
 };
 
-/** A pleasant starting point so the builder is never an empty vase. */
-export const starterBuild: BouquetBuild = {
-  stems: [
-    { shape: "rose", colour: "blush", qty: 5 },
-    { shape: "tulip", colour: "ivory", qty: 3 },
-    { shape: "leaf", colour: "sage", qty: 3 },
-  ],
-  wrap: "kraft",
-  ribbon: "gold",
-};
+/** Every wrap colour the customer would accept, preferred one first. */
+export function wrapChoices(b: BouquetBuild): string[] {
+  return [b.wrap, ...(b.wrapAlts ?? [])];
+}
 
 /* --- pricing --------------------------------------------------------------- */
 
@@ -54,6 +66,10 @@ export function buildStemCount(b: BouquetBuild): number {
 }
 
 export function buildTotal(b: BouquetBuild): number {
+  // No flowers, no price. Wrap and ribbon alone came to ₱120 on an untouched
+  // builder, which reads as a charge for opening the page.
+  if (b.stems.length === 0) return 0;
+
   const stems = b.stems.reduce((sum, s) => sum + shape(s.shape).price * s.qty, 0);
   return stems + wrapById(b.wrap).price + ribbonById(b.ribbon).price;
 }
@@ -63,6 +79,8 @@ export function buildTotal(b: BouquetBuild): number {
 interface Packed {
   s: [string, string, number][];
   w: string;
+  /** Alternate wrap colours. Absent on links made before they existed. */
+  wa?: string[];
   r: string;
   n?: string;
 }
@@ -89,6 +107,7 @@ export function encodeBuild(b: BouquetBuild): string {
     w: b.wrap,
     r: b.ribbon,
   };
+  if (b.wrapAlts?.length) packed.wa = b.wrapAlts;
   if (b.name?.trim()) packed.n = b.name.trim().slice(0, 60);
   try {
     return toBase64Url(JSON.stringify(packed));
@@ -146,9 +165,17 @@ export function decodeBuild(encoded: string | null | undefined): BouquetBuild | 
   const wrapOk = typeof p.w === "string" && wraps.some((w) => w.id === p.w);
   const ribbonOk = typeof p.r === "string" && ribbons.some((r) => r.id === p.r);
 
+  const alts = Array.isArray(p.wa)
+    ? p.wa.filter(
+        (id): id is string =>
+          typeof id === "string" && id !== p.w && wraps.some((w) => w.id === id),
+      )
+    : [];
+
   return {
     stems: capped,
     wrap: wrapOk ? (p.w as string) : emptyBuild.wrap,
+    wrapAlts: alts.length ? alts.slice(0, wraps.length) : undefined,
     ribbon: ribbonOk ? (p.r as string) : emptyBuild.ribbon,
     name: typeof p.n === "string" ? p.n.slice(0, 60) : undefined,
   };
@@ -163,7 +190,12 @@ export function describeBuild(b: BouquetBuild): string[] {
   const lines = b.stems.map(
     (s) => `${shape(s.shape).name} · ${wire(s.colour).name} × ${s.qty}`,
   );
-  lines.push(`Wrap: ${wrapById(b.wrap).name}`);
+  const alts = (b.wrapAlts ?? []).map((id) => wrapById(id).name);
+  lines.push(
+    alts.length
+      ? `Wrap: ${wrapById(b.wrap).name} — or any of: ${alts.join(", ")}`
+      : `Wrap: ${wrapById(b.wrap).name}`,
+  );
   lines.push(`Ribbon: ${ribbonById(b.ribbon).name}`);
   return lines;
 }

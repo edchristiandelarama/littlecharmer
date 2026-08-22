@@ -24,6 +24,7 @@ import {
   buildTotal,
   decodeBuild,
   encodeBuild,
+  wrapChoices,
 } from "@/lib/build-encode";
 import { formatPeso } from "@/lib/products";
 import clsx from "@/lib/clsx";
@@ -55,7 +56,7 @@ export default function Builder() {
     addActive,
     setQty,
     removeGroup,
-    setWrap,
+    toggleWrap,
     setRibbon,
     setName,
     load,
@@ -71,6 +72,12 @@ export default function Builder() {
     const shared = decodeBuild(params.get("b"));
     if (shared) load(shared);
   }, [params, hydrated, load]);
+
+  // Split once for the shape dropdown — greenery belongs in its own group,
+  // not mixed in among the blooms.
+  const blooms = useMemo(() => flowerShapes.filter((f) => !f.foliage), []);
+  const greenery = useMemo(() => flowerShapes.filter((f) => f.foliage), []);
+  const chosenWraps = wrapChoices(build);
 
   const encoded = useMemo(() => encodeBuild(build), [build]);
   const total = buildTotal(build);
@@ -118,33 +125,57 @@ export default function Builder() {
               {stems}/{MAX_STEMS} stems
             </span>
           </div>
-          <div className="flex flex-wrap gap-2">
-            {flowerShapes.map((f) => (
-              <button
-                key={f.id}
-                type="button"
-                onClick={() => setActiveShape(f.id)}
-                aria-pressed={activeShape === f.id}
-                title={f.blurb}
-                className={clsx(
-                  "rounded-full border px-3.5 py-2 text-sm transition-colors",
-                  activeShape === f.id
-                    ? "border-brass bg-brass text-ink"
-                    : "border-line-firm text-cream-2 hover:border-brass hover:text-brass",
-                )}
-              >
-                {f.name}
-                <span className="ml-1.5 text-2xs opacity-70 tabular-nums">
-                  {formatPeso(f.price)}
-                </span>
-              </button>
-            ))}
-          </div>
           {/*
-            A photograph of the real flower, once the shop has uploaded one.
+            A dropdown, not a row of pills. Fifteen shapes wrapped to five rows
+            of buttons and pushed the photograph below the fold — so the one
+            thing that actually helps you choose was the one thing you had to
+            scroll to find. This stays one line high whatever the shop adds.
+          */}
+          <div className="relative">
+            <select
+              value={activeShape}
+              onChange={(e) => setActiveShape(e.target.value)}
+              aria-label="Flower shape"
+              className="w-full appearance-none rounded-lg border border-line-firm bg-surface py-3 pl-3.5 pr-10 text-sm text-cream transition-colors hover:border-brass focus:border-brass focus:outline-none"
+            >
+              <optgroup label="Flowers">
+                {blooms.map((f) => (
+                  <option key={f.id} value={f.id} className="bg-ink text-cream">
+                    {f.name} — {formatPeso(f.price)}
+                  </option>
+                ))}
+              </optgroup>
+              {greenery.length > 0 ? (
+                <optgroup label="Greenery">
+                  {greenery.map((f) => (
+                    <option key={f.id} value={f.id} className="bg-ink text-cream">
+                      {f.name} — {formatPeso(f.price)}
+                    </option>
+                  ))}
+                </optgroup>
+              ) : null}
+            </select>
+            <svg
+              viewBox="0 0 16 16"
+              aria-hidden
+              className="pointer-events-none absolute right-3.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-brass"
+              fill="none"
+            >
+              <path
+                d="M4 6l4 4 4-4"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+
+          {/*
+            The photograph sits directly under the dropdown, so choosing a shape
+            and seeing the real thing happen in one glance, with no scrolling.
             The 3D stage shows what the bouquet will look like; this shows what
-            the actual thing looks like in the hand, which is what reassures
-            someone choosing between shapes.
+            the flower looks like in the hand.
           */}
           {shapeDef(activeShape).photo ? (
             <figure className="flex flex-col gap-1.5">
@@ -373,34 +404,71 @@ export default function Builder() {
 
           {/* Wrap and ribbon are colour choices, not a list of paper types —
               swatches say what a dropdown of names never could. */}
+          {/*
+            Wrap takes as many colours as the customer likes, because every
+            bouquet is made to order from whatever paper is on the shelf that
+            week. Someone who says "blush, ivory or kraft — any of those" gets
+            theirs made sooner than someone who names one colour and waits.
+            The first pick is what the preview renders and what we price.
+          */}
           <div className="flex flex-col gap-2">
-            <span className="text-xs text-muted">Wrap colour</span>
+            <div className="flex items-baseline justify-between gap-3">
+              <span className="text-xs text-muted">Wrap colour</span>
+              <span className="text-2xs text-faint">pick as many as you like</span>
+            </div>
             <ul className="flex flex-wrap gap-2">
-              {wraps.map((w) => (
-                <li key={w.id}>
-                  <button
-                    type="button"
-                    onClick={() => setWrap(w.id)}
-                    aria-pressed={build.wrap === w.id}
-                    title={`${w.name} — ${formatPeso(w.price)}`}
-                    className={clsx(
-                      "grid h-9 w-9 place-items-center rounded-full ring-1 ring-inset ring-black/30 transition-transform",
-                      build.wrap === w.id
-                        ? "scale-110 outline outline-2 outline-offset-2 outline-brass"
-                        : "hover:scale-105",
-                    )}
-                    style={{ backgroundColor: w.hex }}
-                  >
-                    <span className="sr-only">
-                      {w.name}, {formatPeso(w.price)}
-                    </span>
-                  </button>
-                </li>
-              ))}
+              {wraps.map((w) => {
+                const picked = chosenWraps.includes(w.id);
+                return (
+                  <li key={w.id}>
+                    <button
+                      type="button"
+                      onClick={() => toggleWrap(w.id)}
+                      aria-pressed={picked}
+                      title={`${w.name} — ${formatPeso(w.price)}`}
+                      className={clsx(
+                        "grid h-9 w-9 place-items-center rounded-full ring-1 ring-inset ring-black/30 transition-transform",
+                        picked
+                          ? "scale-110 outline outline-2 outline-offset-2 outline-brass"
+                          : "opacity-60 hover:scale-105 hover:opacity-100",
+                      )}
+                      style={{ backgroundColor: w.hex }}
+                    >
+                      <span className="sr-only">
+                        {w.name}, {formatPeso(w.price)}
+                        {picked ? " — chosen" : ""}
+                      </span>
+                      {picked ? (
+                        <svg
+                          viewBox="0 0 16 16"
+                          aria-hidden
+                          className="h-4 w-4 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]"
+                          fill="none"
+                        >
+                          <path
+                            d="M3.5 8.5l3 3 6-7"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      ) : null}
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
             <p className="text-2xs text-faint">
-              {wrapById(build.wrap).name} · {formatPeso(wrapById(build.wrap).price)}
+              {chosenWraps.map((id) => wrapById(id).name).join(", ")} ·{" "}
+              {formatPeso(wrapById(build.wrap).price)}
             </p>
+            {chosenWraps.length > 1 ? (
+              <p className="text-2xs text-muted">
+                We'll use whichever of these we have when we make yours — the
+                preview shows {wrapById(build.wrap).name}.
+              </p>
+            ) : null}
           </div>
 
           <div className="flex flex-col gap-2">
