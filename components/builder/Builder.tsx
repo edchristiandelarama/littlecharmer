@@ -178,7 +178,12 @@ export default function Builder() {
             the flower looks like in the hand.
           */}
           {shapeDef(activeShape).photo ? (
-            <figure className="flex flex-col gap-1.5">
+            /*
+              Capped, because below lg: the panes stack full-width and a 4:3
+              photo grew to 785px on a tablet — one flower filling the screen,
+              with the colours pushed a whole page down.
+            */
+            <figure className="flex w-full max-w-[20rem] flex-col gap-1.5">
               <div className="relative aspect-[4/3] overflow-hidden rounded-lg border border-line bg-surface">
                 <Image
                   key={shapeDef(activeShape).photo}
@@ -281,7 +286,7 @@ export default function Builder() {
               stems={build.stems}
               wrapHex={wrapById(build.wrap).hex}
               ribbonHex={ribbonById(build.ribbon).hex}
-              showWrap={build.wrap !== "none"}
+              showWrap={build.stems.length > 0 && build.wrap !== "none"}
               title="Your bouquet"
               className="h-full max-h-[460px] w-auto"
             />

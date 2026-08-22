@@ -68,7 +68,10 @@ export default function BuilderStage({
             quality={quality}
             fuzz={fuzz}
             sway={false}
-            showWrap
+            // No stems, no paper. An empty bouquet still drew its wrap, so an
+            // untouched builder showed a cone of kraft standing on its own
+            // with the "pick a shape" invitation printed over the top of it.
+            showWrap={build.stems.length > 0}
             spread={0.42}
           />
         </group>

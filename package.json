@@ -6,6 +6,7 @@
   "scripts": {
     "predev": "node scripts/clean-stale-build.mjs",
     "dev": "next dev",
+    "prebuild": "node scripts/guard-dev-server.mjs",
     "build": "next build",
     "start": "next start",
     "clean": "node -e \"require('fs').rmSync('.next',{recursive:true,force:true})\"",
